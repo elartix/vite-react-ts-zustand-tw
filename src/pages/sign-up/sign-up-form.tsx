@@ -77,7 +77,7 @@ export const SignUpForm = memo<SignUpFormProps>(function SignUpForm ({ className
   } = useForm<SignUpFormType>({
     // Specify SignUpForm as generic type
     resolver: zodResolver(SignUpFormSchema.refine(uniqueName, {
-      message: 'Username already exists',
+      message: 'Provided username already in use.',
       path: ['username'],
     })),
     mode: 'all', // 'onBlur',
