@@ -90,6 +90,7 @@ Please updated ```.env.local``` file
 ```
 GENERATE_SOURCEMAP=true
 HOST=local.domain.com
+PORT=8080 // what ever you want
 HTTPS=true
 SSL_CRT_FILE=./.cert/cert.pem
 SSL_KEY_FILE=./.cert/key.pem
