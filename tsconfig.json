@@ -29,7 +29,7 @@
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
 
-    "types": ["node", "jest", "vitest/globals", "@testing-library/jest-dom"],
+    "types": ["node", "@testing-library/jest-dom"],
     "paths": {
       "@/*": ["./src/*"]
     }
