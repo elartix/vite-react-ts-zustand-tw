@@ -130,7 +130,7 @@ export function makeServer ({ environment = 'test' }) {
 
         return new Response(200, {}, {
           data: {
-            alreadyExist: false
+            userNameAlreadyExist: false
           }
         });
       });

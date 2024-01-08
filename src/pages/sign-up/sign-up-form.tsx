@@ -12,6 +12,7 @@ import { AtSymbolIcon, EyeIcon, EyeSlashIcon, LockClosedIcon, UserIcon } from '@
 
 // local dependencies
 import { ValidationRules } from '@/constants';
+import useRefinement, { RefinementCallback } from '@/hooks/use-refinement.ts';
 
 
 const SignUpFormSchema = z.object({
@@ -36,12 +37,32 @@ type SignUpFormProps = PropsWithChildren<{
   onSubmit: (data: SignUpFormType) => void;
 }>;
 
+function checkUserNameToBeUnique (): RefinementCallback<{ username: string }> {
+  return async (data, { signal }) => {
+    const response = await fetch('/api/auth/validation/username', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      },
+      // body: JSON.stringify({ username: 'hello' })
+      body: JSON.stringify({ ...data })
+    });
+    const json = await response.json();
+
+    return !_.get(json, 'data.userNameAlreadyExist', false);
+  };
+}
+
 export const SignUpForm = memo<SignUpFormProps>(function SignUpForm ({ className, onSubmit, onSubmitErrorMessage }) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const handlePasswordVisibility = useCallback(() => {
     setIsPasswordVisible((prev) => !prev);
   }, [setIsPasswordVisible]);
+
+  const uniqueName = useRefinement(checkUserNameToBeUnique(), {
+    debounce: 1000,
+  });
 
   const {
     reset,
@@ -51,7 +72,11 @@ export const SignUpForm = memo<SignUpFormProps>(function SignUpForm ({ className
     formState: { errors }
   } = useForm<SignUpFormType>({
     // Specify SignUpForm as generic type
-    resolver: zodResolver(SignUpFormSchema),
+    resolver: zodResolver(SignUpFormSchema.refine(uniqueName, {
+      message: 'Username already exists',
+      path: ['username'],
+    })),
+    mode: 'all',
   });
 
   const handleFormSubmit = useCallback((data: SignUpFormType) => {
