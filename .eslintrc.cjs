@@ -651,5 +651,9 @@ module.exports = {
       'error'
     ],
     '@typescript-eslint/no-unused-vars': ['warn', { 'varsIgnorePattern': '^_', "argsIgnorePattern": "^_" }],
+    "@typescript-eslint/ban-ts-comment": [
+      'off',
+      {'ts-ignore': 'allow-with-description'},
+    ]
   },
 }
