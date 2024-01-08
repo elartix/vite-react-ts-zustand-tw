@@ -41,6 +41,6 @@ export const Home = memo<PropsWithChildren<{ className?: string }>>(function Hom
 
   return <MainLayout className={cn('home-page', className)}>
     <Hero />
-    <ContactForm />
+    {/* <ContactForm /> */}
   </MainLayout>;
 });
