@@ -109,9 +109,9 @@ export const SignUpForm = memo<SignUpFormProps>(function SignUpForm ({ className
       startContent={
         <AtSymbolIcon className="h-4 text-2xl text-default-400 pointer-events-none flex-shrink-0"/>
       }
-      isInvalid={!_.isEmpty(_.get(errors, 'username.message'))}
-      color={!_.isEmpty(_.get(errors, 'username.message')) ? 'danger' : 'default'}
-      errorMessage={!_.isEmpty(_.get(errors, 'username.message')) && _.get(errors, 'username.message', null)}
+      isInvalid={!_.isEmpty(_.get(errors, 'email.message'))}
+      color={!_.isEmpty(_.get(errors, 'email.message')) ? 'danger' : 'default'}
+      errorMessage={!_.isEmpty(_.get(errors, 'email.message')) && _.get(errors, 'email.message', null)}
       {...register('email')}
     />
     <Input
@@ -167,9 +167,9 @@ export const SignUpForm = memo<SignUpFormProps>(function SignUpForm ({ className
         </Button>
       }
       type={isPasswordVisible ? 'text' : 'password'}
-      isInvalid={!_.isEmpty(_.get(errors, 'password.message'))}
-      color={!_.isEmpty(_.get(errors, 'password.message')) ? 'danger' : 'default'}
-      errorMessage={!_.isEmpty(_.get(errors, 'password.message')) && _.get(errors, 'password.message', null)}
+      isInvalid={!_.isEmpty(_.get(errors, 'confirmPassword.message'))}
+      color={!_.isEmpty(_.get(errors, 'confirmPassword.message')) ? 'danger' : 'default'}
+      errorMessage={!_.isEmpty(_.get(errors, 'confirmPassword.message')) && _.get(errors, 'confirmPassword.message', null)}
       {...register('confirmPassword')}
     />
     <div className="flex items-center">
