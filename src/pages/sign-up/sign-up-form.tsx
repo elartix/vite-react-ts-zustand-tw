@@ -12,7 +12,8 @@ import { AtSymbolIcon, EyeIcon, EyeSlashIcon, LockClosedIcon, UserIcon } from '@
 
 // local dependencies
 import { ValidationRules } from '@/constants';
-import useRefinement, { RefinementCallback } from '@/hooks/use-refinement.ts';
+import useRefinement, { RefinementCallback } from '@/hooks/use-refinement';
+import { useSignUpControllerStore } from '@/pages/sign-up/sign-up.controller';
 
 
 const SignUpFormSchema = z.object({
@@ -34,7 +35,7 @@ export type SignUpFormType = z.infer<typeof SignUpFormSchema>;
 type SignUpFormProps = PropsWithChildren<{
   className?: string
   onSubmitErrorMessage?: string | null
-  onSubmit: (data: SignUpFormType) => void;
+  onSubmit: (data: Partial<SignUpFormType>) => void;
 }>;
 
 function checkUserNameToBeUnique (): RefinementCallback<{ username: string }> {
@@ -57,7 +58,13 @@ function checkUserNameToBeUnique (): RefinementCallback<{ username: string }> {
   };
 }
 
-export const SignUpForm = memo<SignUpFormProps>(function SignUpForm ({ className, onSubmit, onSubmitErrorMessage }) {
+export const SignUpForm = memo<SignUpFormProps>(function SignUpForm ({ className, onSubmit }) {
+  const {
+    isLoading,
+    submitErrorMessage,
+    user,
+  } = useSignUpControllerStore((state) => state);
+
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const handlePasswordVisibility = useCallback(() => {
@@ -69,6 +76,7 @@ export const SignUpForm = memo<SignUpFormProps>(function SignUpForm ({ className
   });
 
   const {
+    setValue,
     reset,
     control,
     register,
@@ -85,10 +93,38 @@ export const SignUpForm = memo<SignUpFormProps>(function SignUpForm ({ className
   });
 
   const handleFormSubmit = useCallback((data: SignUpFormType) => {
-    onSubmit(data);
-  }, [onSubmit]);
+    onSubmit(_.omit(data, 'confirmPassword'));
+    reset();
+  }, [onSubmit, reset]);
 
   return <form className={cn('grid grid-cols-1 gap-y-8', className)} noValidate onSubmit={handleSubmit(handleFormSubmit)}>
+    <Transition
+      show={Boolean(user)}
+      enter="transition ease-out duration-100"
+      enterFrom="transform opacity-0 scale-95"
+      enterTo="transform opacity-100 scale-100"
+      leave="transition ease-in duration-75"
+      leaveFrom="transform opacity-100 scale-100"
+      leaveTo="transform opacity-0 scale-95"
+    >
+      <div className="p-4 mb-8 text-sm text-red-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-white overflow-x-auto "
+           role="alert">
+        <div className="font-medium">User Created!</div>
+        <span>
+          You can check username { ' ' }
+          <Button
+            type="button"
+            size="sm"
+            color="primary"
+            variant="flat"
+            onClick={() => setValue('username', _.get(user, 'username', ''))}>
+            Set value: { user?.username }
+          </Button>
+        </span>
+        <pre><code>{ JSON.stringify(user, null, 4) }</code></pre>
+      </div>
+    </Transition>
+
     <Input
       type="text"
       label="Username"
@@ -181,7 +217,7 @@ export const SignUpForm = memo<SignUpFormProps>(function SignUpForm ({ className
         variant="solid"
         color="primary"
         className="w-full"
-        isLoading={false}
+        isLoading={isLoading}
       >
         <span>
           Sign Up
@@ -190,7 +226,7 @@ export const SignUpForm = memo<SignUpFormProps>(function SignUpForm ({ className
     </div>
 
     <Transition
-      show={Boolean(onSubmitErrorMessage)}
+      show={Boolean(submitErrorMessage)}
       enter="transition ease-out duration-100"
       enterFrom="transform opacity-0 scale-95"
       enterTo="transform opacity-100 scale-100"
@@ -201,7 +237,7 @@ export const SignUpForm = memo<SignUpFormProps>(function SignUpForm ({ className
       <div className="p-4 mb-0 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
            role="alert">
         <div className="font-medium">Sign up error!</div>
-        <span>{ onSubmitErrorMessage }</span>.
+        <span>{ submitErrorMessage }</span>.
       </div>
     </Transition>
   </form>;

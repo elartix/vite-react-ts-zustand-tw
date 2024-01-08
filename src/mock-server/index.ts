@@ -11,6 +11,53 @@ import { UserModel, UserModelResponse } from '@/types/models/user.ts';
 export const fetchUsers = (url: string) =>
   fetch(url).then<UserModelResponse>((r) => r.json());
 
+const generateFakeUserFactory = () => Factory.extend<Partial<UserModel>>({
+  get id () {
+    return faker.string.uuid();
+  },
+  get firstName () {
+    return faker.person.firstName();
+  },
+  get lastName () {
+    return faker.person.lastName();
+  },
+  get name () {
+    return faker.person.fullName({ firstName: this.firstName as string, lastName: this.lastName as string });
+  },
+  streetAddress () {
+    return faker.location.streetAddress({ useFullAddress: true });
+  },
+  cityStateZip () {
+    return faker.helpers.fake(
+      '{{location.city}}, {{location.zipCode}}'
+    );
+  },
+  get phone () {
+    return faker.phone.number();
+  },
+  get username () {
+    return faker.internet.userName({ firstName: this.firstName as string, lastName: this.lastName as string });
+  },
+  get password () {
+    return faker.internet.password({ length: 9, pattern: /[a-zA-Z0-9!@#$%^&*)(+=._-]/ });
+  },
+  get email () {
+    return faker.internet.email({ firstName: this.firstName as string, lastName: this.lastName as string });
+  },
+  get avatar () {
+    return faker.internet.avatar();
+  },
+});
+
+const generateFakeUser = (extraData: Partial<UserModel>) => {
+  const factory = generateFakeUserFactory();
+  const newUser = _.get(factory, 'attrs', {});
+  return {
+    ...newUser,
+    ...extraData
+  };
+};
+
 export function makeServer ({ environment = 'test' }) {
   return createServer({
     environment,
@@ -23,36 +70,39 @@ export function makeServer ({ environment = 'test' }) {
 
     factories: {
       user: Factory.extend<Partial<UserModel>>({
-        get firstName () {
+        id (i) {
+          return faker.string.uuid();
+        },
+        firstName () {
           return faker.person.firstName();
         },
-        get lastName () {
+        lastName () {
           return faker.person.lastName();
         },
-        get name () {
-          return faker.person.fullName({ firstName: this.firstName, lastName: this.lastName });
+        name () {
+          return faker.person.fullName({ firstName: this.firstName as string, lastName: this.lastName as string });
         },
-        get streetAddress () {
-          return faker.address.streetAddress();
+        streetAddress () {
+          return faker.location.streetAddress({ useFullAddress: true });
         },
-        get cityStateZip () {
+        cityStateZip () {
           return faker.helpers.fake(
-            '{{address.city}}, {{address.stateAbbr}} {{address.zipCode}}'
+            '{{location.city}}, {{location.zipCode}}'
           );
         },
-        get phone () {
+        phone () {
           return faker.phone.number();
         },
-        get username () {
-          return faker.internet.userName({ firstName: this.firstName, lastName: this.lastName });
+        username () {
+          return faker.internet.userName({ firstName: this.firstName as string, lastName: this.lastName as string });
         },
-        get password () {
+        password () {
           return faker.internet.password({ length: 9, pattern: /[a-zA-Z0-9!@#$%^&*)(+=._-]/ });
         },
-        get email () {
-          return faker.internet.email({ firstName: this.firstName, lastName: this.lastName });
+        email () {
+          return faker.internet.email({ firstName: this.firstName as string, lastName: this.lastName as string });
         },
-        get avatar () {
+        avatar () {
           return faker.internet.avatar();
         },
       }),
@@ -61,14 +111,14 @@ export function makeServer ({ environment = 'test' }) {
     seeds (server) {
       const firstName = 'First';
       const lastName = 'Last';
-      const helloUser = {
+      const helloUser = generateFakeUser({
         username: 'hello',
         firstName,
         lastName,
         name: faker.person.fullName({ firstName, lastName }),
         email: faker.internet.email({ firstName, lastName }),
         password: 'p@ssword1'
-      };
+      });
       // console.log(helloUser);
       server.create('user', helloUser);
       server.createList('user', 4);
@@ -93,6 +143,14 @@ export function makeServer ({ environment = 'test' }) {
             users: schema?.users.all().models
           }
         });
+      });
+
+      this.patch('/user/:id', (schema, request) => {
+        const id = request.params.id;
+        // let attrs = this.normalizedRequestAttrs()
+
+        // @ts-ignore
+        return schema?.users.findBy({ id }).update(attrs);
       });
 
       this.get('/actuator/health', () => ({
@@ -135,9 +193,49 @@ export function makeServer ({ environment = 'test' }) {
         });
       });
 
-      this.get('auth/register', () => ({
-        status: 'UP',
-      }));
+      this.post('/auth/register', (schema, request) => {
+        const attrs = JSON.parse(request.requestBody);
+        const username = _.get(attrs, 'username', null);
+
+        if (!_.isEmpty(username)) {
+          // @ts-ignore
+          const res = schema?.users.findBy({ username });
+          const userNameAlreadyExist = _.isEqual(_.get(res, 'attrs.username'), username);
+          if (!userNameAlreadyExist) {
+            const firstName = faker.person.firstName();
+            const lastName = faker.person.lastName();
+            const name = faker.person.fullName({ firstName, lastName });
+            const newUser = generateFakeUser({
+              firstName,
+              lastName,
+              name,
+              username,
+              email: _.get(attrs, 'email', null),
+              password: _.get(attrs, 'password', null)
+            });
+            // @ts-ignore
+            const user = schema?.users.create(newUser);
+            return new Response(200, {}, {
+              data: {
+                user
+              }
+            });
+          }
+          return new Response(422, {}, {
+            data: {
+              error: 'That username address is already in use',
+              statusCode: 422
+            }
+          });
+
+        }
+
+        return new Response(200, {}, {
+          data: {
+            userNameAlreadyExist: false
+          }
+        });
+      });
 
 
       this.get('/auth/validate', () => ({

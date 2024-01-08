@@ -5,7 +5,7 @@ const STRING = z.string();
 const EMAIL = STRING.email('Please type valid email');
 
 const NAME = z.string()
-  .min(3, 'Should be at least 2 characters in a length')
+  .min(3, 'Should be at least 3 characters in a length')
   .max(16, 'Should be no more than 16 characters in a length');
 
 const PASSWORD = z.string()

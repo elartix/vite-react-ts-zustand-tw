@@ -1,5 +1,4 @@
 // outsource dependencies
-import _ from 'lodash';
 import cn from 'classnames';
 import { memo, PropsWithChildren, useEffect, useState } from 'react';
 
@@ -39,7 +38,6 @@ export const Home = memo<PropsWithChildren<{ className?: string }>>(function Hom
         setUsers(json.users);
       });
   }, []);
-
 
   return <MainLayout className={cn('home-page', className)}>
     <Hero />

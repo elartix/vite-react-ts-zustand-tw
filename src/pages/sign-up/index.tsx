@@ -2,7 +2,7 @@
 import _ from 'lodash';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
-import { memo, PropsWithChildren, useCallback } from 'react';
+import { memo, PropsWithChildren, useCallback, useEffect } from 'react';
 
 
 // local dependencies
@@ -10,16 +10,32 @@ import * as ROUTE from '@/constants/routes';
 import { AuthLayout } from '@/modules/layouts';
 import { AppLogo } from '@/components/app-logo';
 import { SignUpForm, SignUpFormType } from '@/pages/sign-up/sign-up-form';
+import { useSignUpControllerStore } from '@/pages/sign-up/sign-up.controller';
 
 
 export const SignUp = memo<PropsWithChildren<{ className?: string }>>(function SignUp ({ className }) {
 
-  const handleSubmitForm = useCallback((data: SignUpFormType) => {
+  const {
+    health,
+    initialized,
+    submitErrorMessage,
+    initialize,
+    signUp,
+    resetSubmitErrorMessage
+  } = useSignUpControllerStore((state) => state);
 
-  }, []);
+  // NOTE initialize business logic
+  useEffect(() => { initialize({}); }, [initialize]);
 
-  // items-center justify-center min-h-screen-vh overflow-y-auto
-  // h-[calc((var(--vh,1vh)_*_100)_-_8rem)]
+  const handleSubmitForm = useCallback((data: Partial<SignUpFormType>) => {
+    signUp(data);
+  }, [signUp]);
+
+  useEffect(() => {
+    if (!_.isEmpty(submitErrorMessage)) {
+      setTimeout(() => resetSubmitErrorMessage(), 4000);
+    }
+  }, [submitErrorMessage, resetSubmitErrorMessage]);
 
   return <AuthLayout
     className={cn('sign-up-page neutral-150 justify-center h-screen-vh', className)}>

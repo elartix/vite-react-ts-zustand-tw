@@ -10,7 +10,7 @@ import { UserModel } from '@/types/models/user.ts';
 import { storeLogger } from '@/services/store-logger';
 
 
-const storeName = `${config('NAME')} - ${config('SID')} - App`;
+const storeName = `${config('NAME')} - ${config('SID')} - App Global`;
 
 export type AppState = {
   initialized: boolean,
@@ -21,7 +21,7 @@ export type AppState = {
 }
 
 export type AppAction = {
-  initialize: (state: Partial<AppState | {}>) => void
+  initialize: (state: Partial<AppState | NonNullable<unknown>>) => void
   updateFirstName: (firstName: AppState['firstName']) => void
   updateLastName: (lastName: AppState['lastName']) => void
 }
@@ -42,16 +42,26 @@ export const useAppControllerStore = create<AppControllerStateAction>()(
         (set, get) => ({
           ...initialAppState,
           initialize: async () => {
-            const response = await fetch('/api/actuator/health');
-            const health = await response.json();
+            try {
+              const response = await fetch('/api/actuator/health');
+              const health = await response.json();
 
-            set((state) => {
-              return {
-                ...state,
-                health: _.isEqual(_.get(health, 'status'), 'UP'),
-                initialized: true
-              };
-            });
+              set((state) => {
+                return {
+                  ...state,
+                  health: _.isEqual(_.get(health, 'status'), 'UP'),
+                  initialized: true
+                };
+              });
+            } catch (error) {
+              set((state) => {
+                return {
+                  ...state,
+                  health: false,
+                  initialized: false
+                };
+              });
+            }
           },
           updateFirstName: (firstName) => set(() => ({ firstName: firstName })),
           updateLastName: (lastName) => set(() => ({ lastName: lastName })),
