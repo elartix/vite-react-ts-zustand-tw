@@ -18,6 +18,11 @@ export default defineConfig({
     assetsDir: 'assets',
     emptyOutDir: true,
     sourcemap: process.env.GENERATE_SOURCEMAP as unknown as boolean || true,
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'index.html'),
+      },
+    },
   },
   define: {
     // By default, Vite doesn't include shims for NodeJS/
