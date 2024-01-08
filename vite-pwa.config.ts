@@ -69,3 +69,13 @@ export const PWAConfig: Partial<VitePWAOptions> = {
     sourcemap: true,
   },
 };
+
+export const getPWAConfig = ({ name, short_name, description }): Partial<VitePWAOptions> => ({
+  ...PWAConfig,
+  manifest: {
+    ...PWAConfig.manifest,
+    name,
+    short_name,
+    description
+  }
+});

@@ -40,6 +40,6 @@
     "./src/**/*.tsx",
     "./src/types/**/*.d.ts"
   ],
-  "exclude": ["build"],
+  "exclude": ["build/**/*", "dist/**/*"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

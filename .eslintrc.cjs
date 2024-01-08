@@ -66,7 +66,8 @@ module.exports = {
           'client_id',
           'grant_type',
           'id_token',
-          '^UNSAFE_'
+          '^UNSAFE_',
+          'short_name'
         ],
         'ignoreDestructuring': true,
         'properties': 'always'
