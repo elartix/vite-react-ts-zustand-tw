@@ -39,17 +39,21 @@ type SignUpFormProps = PropsWithChildren<{
 
 function checkUserNameToBeUnique (): RefinementCallback<{ username: string }> {
   return async (data, { signal }) => {
-    const response = await fetch('/api/auth/validation/username', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8'
-      },
-      // body: JSON.stringify({ username: 'hello' })
-      body: JSON.stringify({ ...data })
-    });
-    const json = await response.json();
+    if (!_.isEmpty(_.get(data, 'username'))) {
+      // Mock Response async validation
+      const response = await fetch('/api/auth/validation/username', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify({ ...data })
+      });
+      const json = await response.json();
 
-    return !_.get(json, 'data.userNameAlreadyExist', false);
+      return !_.get(json, 'data.userNameAlreadyExist', true);
+    }
+
+    return true;
   };
 }
 
@@ -61,7 +65,7 @@ export const SignUpForm = memo<SignUpFormProps>(function SignUpForm ({ className
   }, [setIsPasswordVisible]);
 
   const uniqueName = useRefinement(checkUserNameToBeUnique(), {
-    debounce: 1000,
+    debounce: 500,
   });
 
   const {
@@ -76,14 +80,13 @@ export const SignUpForm = memo<SignUpFormProps>(function SignUpForm ({ className
       message: 'Username already exists',
       path: ['username'],
     })),
-    mode: 'all',
+    mode: 'all', // 'onBlur',
+    reValidateMode: 'onSubmit'
   });
 
   const handleFormSubmit = useCallback((data: SignUpFormType) => {
-    console.log(errors);
     onSubmit(data);
-  }, [errors, onSubmit]);
-  console.log(errors);
+  }, [onSubmit]);
 
   return <form className={cn('grid grid-cols-1 gap-y-8', className)} noValidate onSubmit={handleSubmit(handleFormSubmit)}>
     <Input
@@ -98,7 +101,7 @@ export const SignUpForm = memo<SignUpFormProps>(function SignUpForm ({ className
       isInvalid={!_.isEmpty(_.get(errors, 'username.message'))}
       color={!_.isEmpty(_.get(errors, 'username.message')) ? 'danger' : 'default'}
       errorMessage={!_.isEmpty(_.get(errors, 'username.message')) && _.get(errors, 'username.message', null)}
-      {...register('username')}
+      {...register('username', { onChange: uniqueName.invalidate })}
     />
     <Input
       type="text"
