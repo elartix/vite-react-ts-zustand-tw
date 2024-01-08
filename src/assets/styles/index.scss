@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "main-layout-navbar";
+
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  touch-action: manipulation;
+  -ms-touch-action: manipulation;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+@layer base {
+  html, body, #__next, #root, #root > div {
+   /*// @apply h-full min-h-full max-w-screen;*/
+    @apply h-full min-h-full;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    color: rgb(var(--foreground-rgb));
+  }
+/*  #root > div {
+    @apply flex flex-col h-screen-vh;
+  }*/
+}
+
+.main-layout {
+  @apply flex flex-col h-screen-vh;
+  //@apply flex flex-col h-full min-hs-full;
+  //min-h-screen-vh
+  //min-height: calc(var(--vh, 1vh) * 100);
+}
+
