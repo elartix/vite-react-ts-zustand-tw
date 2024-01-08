@@ -10,7 +10,7 @@ import { UserModel } from '@/types/models/user.ts';
 import { storeLogger } from '@/services/store-logger';
 
 
-const storeName = `${config('NAME')} - ${config('SID')} - App`
+const storeName = `${config('NAME')} - ${config('SID')} - App`;
 
 export type AppState = {
   initialized: boolean,
@@ -51,7 +51,7 @@ export const useAppControllerStore = create<AppControllerStateAction>()(
                 health: _.isEqual(_.get(health, 'status'), 'UP'),
                 initialized: true
               };
-            })
+            });
           },
           updateFirstName: (firstName) => set(() => ({ firstName: firstName })),
           updateLastName: (lastName) => set(() => ({ lastName: lastName })),
@@ -68,4 +68,4 @@ export const useAppControllerStore = create<AppControllerStateAction>()(
     ),
     storeName,
   ),
-)
+);

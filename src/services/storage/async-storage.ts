@@ -39,7 +39,7 @@ const createPromise = (getValue: () => any, callback?: CreatePromiseCallback): R
       }
       resolve(value);
     } catch (errors) {
-      callback && callback(errors)
+      callback && callback(errors);
       reject(errors);
     }
   });
@@ -78,7 +78,7 @@ export class AsyncStorage {
   /**
    * Fetches `key` value.
    */
-  get(name: string, callback?: CreatePromiseCallback): Promise<any> {
+  get (name: string, callback?: CreatePromiseCallback): Promise<any> {
     return createPromise(() => {
       if (!this.isSupported) { return null; }
       // @ts-ignore
@@ -96,7 +96,7 @@ export class AsyncStorage {
   /**
    * Sets `value` for `key`.
    */
-  set(name: string, data: any, callback?: CreatePromiseCallback): Promise<any> {
+  set (name: string, data: any, callback?: CreatePromiseCallback): Promise<any> {
     return createPromise(() => {
       if (!this.isSupported) { return null; }
       return this.remove(name).then(() => {
@@ -109,7 +109,7 @@ export class AsyncStorage {
   /**
    * Removes a `key`
    */
-  remove(name: string, callback?: CreatePromiseCallback): Promise<any> {
+  remove (name: string, callback?: CreatePromiseCallback): Promise<any> {
     return createPromise(() => {
       return this.isSupported && this.store.removeItem(name);
     }, callback);
@@ -118,13 +118,13 @@ export class AsyncStorage {
   /**
    * Merges existing value with input value, assuming they are stringified JSON.
    */
-  update(name: string, data = {}, callback?: CreatePromiseCallback): Promise<any> {
+  update (name: string, data = {}, callback?: CreatePromiseCallback): Promise<any> {
     return createPromise(() => {
       if (!this.isSupported) { return null; }
       // NOTE working fine only with objects
       return this.get(name).then((prev) => {
-        return this.set(name, Object.assign(prev, data))
-      })
+        return this.set(name, Object.assign(prev, data));
+      });
     }, callback);
   }
 
@@ -137,7 +137,7 @@ export class AsyncStorage {
   bindToPath = (name: string): AsyncStorageBindPath => ({
     name,
     get: (): Promise<any> => {
-      return this.get(name)
+      return this.get(name);
     },
     isSupported: this.isSupported,
     remove: () => this.remove(name),

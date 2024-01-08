@@ -31,7 +31,7 @@ export interface RefinementCallback<T> {
  * @returns A refinement function that can be used in zod schemas. Has an `invalidate` method to
  * invalidate the cache and allow re-performing the refinement.
  */
-export default function useRefinement<T>(
+export default function useRefinement<T> (
   callback: RefinementCallback<T>,
   { debounce }: { debounce?: number } = {}
 ): Refinement<T> {
@@ -58,7 +58,7 @@ interface RefinementContext<T> {
   debounce?: number;
 }
 
-function createRefinement<T>(ctxRef: MutableRefObject<RefinementContext<T>>) {
+function createRefinement<T> (ctxRef: MutableRefObject<RefinementContext<T>>) {
   let abortController: AbortController | null = null;
   let result: Promise<boolean> | null = null;
   let timeout: ReturnType<typeof setTimeout> | null = null;

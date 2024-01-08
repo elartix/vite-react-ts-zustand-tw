@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  readonly GENERATE_SOURCEMAP:  boolean | 'inline' | 'hidden'
+  readonly GENERATE_SOURCEMAP: boolean | 'inline' | 'hidden'
 
   readonly VITE_APP_TITLE: string
   readonly REACT_APP_TITLE: string
