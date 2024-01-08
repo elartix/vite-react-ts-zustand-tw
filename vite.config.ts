@@ -14,7 +14,7 @@ import { PWAConfig } from './vite-pwa.config';
 // https://vitejs.dev/config/
 export default defineConfig({
   build: {
-    outDir: 'build',
+    outDir: 'dist',
     assetsDir: 'assets',
     emptyOutDir: true,
     sourcemap: process.env.GENERATE_SOURCEMAP as unknown as boolean || true,
