@@ -1,6 +1,5 @@
 # Vite + React + TypeScript + Zustand + Tailwind
 
-
 ## Introduction
 This project was bootstrapped with [Vite react-ts](https://vitejs.dev/guide/#trying-vite-online).
 
@@ -11,6 +10,17 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
+## Connected packages
+- [React](https://react.dev/)
+- [Axios](https://www.npmjs.com/package/axios)
+- [Lodash](https://lodash.com/docs)
+- [Tailwindcss](https://tailwindcss.com/docs/installation)
+- [NextUI](https://nextui.org/docs/guide/installation)
+- [headlessui/react](https://headlessui.com/)
+- [heroicons](https://heroicons.com/)
+- [zustand](https://github.com/pmndrs/zustand)
+- [react-router](https://reacttraining.com/react-router/web/example/basic)
+- [react-hook-form](https://www.react-hook-form.com/)
 
 ## Install dependencies.
 ```
