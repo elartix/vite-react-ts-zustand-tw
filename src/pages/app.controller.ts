@@ -57,8 +57,8 @@ export const useAppControllerStore = create<AppControllerStateAction>()(
               set((state) => {
                 return {
                   ...state,
-                  health: true,
-                  initialized: true
+                  health: false,
+                  initialized: false
                 };
               });
             }
