@@ -40,7 +40,8 @@
     "./mocks",
     "./src/**/*.ts",
     "./src/**/*.tsx",
-    "./src/types/**/*.d.ts"
+    "./src/types/**/*.d.ts",
+    "./tailwind.config.ts"
   ],
   "exclude": ["build/**/*", "dist/**/*"],
   "references": [{ "path": "./tsconfig.node.json" }]

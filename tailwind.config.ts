@@ -1,13 +1,13 @@
-import type { Config } from 'tailwindcss';
+import { type Config } from 'tailwindcss';
 
 import { heroui } from '@heroui/react';
 import formsPlugin from '@tailwindcss/forms';
 import uiPlugin from '@headlessui/tailwindcss';
-// @ts-ignore
+// @ts-ignore ts check
 import { fontFamily } from 'tailwindcss/defaultTheme';
 import typographyPlugin from '@tailwindcss/typography';
 import aspectRatioPlugin from '@tailwindcss/aspect-ratio';
-// @ts-ignore
+// @ts-ignore ts check
 import hideScrollbarPlugin from 'tailwind-scrollbar-hide';
 
 
@@ -15,7 +15,7 @@ const config: Config = {
   content: [
     './index.html',
     './src/**/*.{js,ts,jsx,tsx}',
-    "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}",
+    './node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}',
   ],
   darkMode: ['class', '[data-mode="dark"]'],
   theme: {
