@@ -38,7 +38,7 @@ type SignUpFormProps = PropsWithChildren<{
   onSubmit: (data: Partial<SignUpFormType>) => void
 }>;
 
-function checkUserNameToBeUnique (): RefinementCallback<{ username: string }> {
+function checkUserNameToBeUnique(): RefinementCallback<{ username: string }> {
   return async (data, { signal }) => {
     if (!_.isEmpty(_.get(data, 'username'))) {
       // Mock Response async validation
@@ -58,7 +58,7 @@ function checkUserNameToBeUnique (): RefinementCallback<{ username: string }> {
   };
 }
 
-export const SignUpForm = memo<SignUpFormProps>(function SignUpForm ({ className, onSubmit }) {
+export const SignUpForm = memo<SignUpFormProps>(function SignUpForm({ className, onSubmit }) {
   const {
     isLoading,
     submitErrorMessage,
@@ -97,7 +97,9 @@ export const SignUpForm = memo<SignUpFormProps>(function SignUpForm ({ className
     reset();
   }, [onSubmit, reset]);
 
-  return <form className={cn('grid grid-cols-1 gap-y-8', className)} noValidate onSubmit={handleSubmit(handleFormSubmit)}>
+  return <form
+    className={cn('grid grid-cols-1 gap-y-4', className)} noValidate
+    onSubmit={handleSubmit(handleFormSubmit)}>
     <Transition
       show={Boolean(user)}
       enter="transition ease-out duration-100"
@@ -107,21 +109,22 @@ export const SignUpForm = memo<SignUpFormProps>(function SignUpForm ({ className
       leaveFrom="transform opacity-100 scale-100"
       leaveTo="transform opacity-0 scale-95"
     >
-      <div className="p-4 mb-8 text-sm text-red-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-white overflow-x-auto "
-        role="alert">
+      <div
+        className="p-4 mb-8 text-sm text-red-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-white overflow-x-auto"
+      >
         <div className="font-medium">User Created!</div>
         <span>
-          You can check username { ' ' }
+          You can check username {' '}
           <Button
             type="button"
             size="sm"
             color="primary"
             variant="flat"
             onClick={() => setValue('username', _.get(user, 'username', ''))}>
-            Set value: { user?.username }
+            Set value: {user?.username}
           </Button>
         </span>
-        <pre><code>{ JSON.stringify(user, null, 4) }</code></pre>
+        <pre><code>{JSON.stringify(user, null, 4)}</code></pre>
       </div>
     </Transition>
 
@@ -130,7 +133,7 @@ export const SignUpForm = memo<SignUpFormProps>(function SignUpForm ({ className
       label="Username"
       variant={'flat'}
       placeholder="Enter your username"
-      labelPlacement="outside"
+      labelPlacement="outside-top"
       startContent={
         <UserIcon className="h-4 text-2xl text-default-400 pointer-events-none flex-shrink-0"/>
       }
@@ -144,7 +147,7 @@ export const SignUpForm = memo<SignUpFormProps>(function SignUpForm ({ className
       label="Email"
       variant={'flat'}
       placeholder="Enter your email"
-      labelPlacement="outside"
+      labelPlacement="outside-top"
       startContent={
         <AtSymbolIcon className="h-4 text-2xl text-default-400 pointer-events-none flex-shrink-0"/>
       }
@@ -156,7 +159,7 @@ export const SignUpForm = memo<SignUpFormProps>(function SignUpForm ({ className
     <Input
       label="Password"
       variant={'flat'}
-      labelPlacement="outside"
+      labelPlacement="outside-top"
       placeholder="Enter your password"
       startContent={
         <LockClosedIcon className="h-4 text-2xl text-default-400 pointer-events-none flex-shrink-0"/>
@@ -169,11 +172,11 @@ export const SignUpForm = memo<SignUpFormProps>(function SignUpForm ({ className
           aria-label={isPasswordVisible ? 'Hide Password' : 'Show Password'}
           className="focus:outline-none"
           onClick={handlePasswordVisibility}>
-          { isPasswordVisible ? (
+          {isPasswordVisible ? (
             <EyeIcon className="h-4 text-2xl text-default-400 pointer-events-none"/>
           ) : (
             <EyeSlashIcon className="h-4 text-2xl text-default-400 pointer-events-none"/>
-          ) }
+          )}
         </Button>
       }
       type={isPasswordVisible ? 'text' : 'password'}
@@ -185,7 +188,7 @@ export const SignUpForm = memo<SignUpFormProps>(function SignUpForm ({ className
     <Input
       label="Confirm Password"
       variant={'flat'}
-      labelPlacement="outside"
+      labelPlacement="outside-top"
       placeholder="Enter confirm password"
       startContent={
         <LockClosedIcon className="h-4 text-2xl text-default-400 pointer-events-none flex-shrink-0"/>
@@ -198,11 +201,11 @@ export const SignUpForm = memo<SignUpFormProps>(function SignUpForm ({ className
           aria-label={isPasswordVisible ? 'Hide Password' : 'Show Password'}
           className="focus:outline-none"
           onClick={handlePasswordVisibility}>
-          { isPasswordVisible ? (
+          {isPasswordVisible ? (
             <EyeIcon className="h-4 text-2xl text-default-400 pointer-events-none"/>
           ) : (
             <EyeSlashIcon className="h-4 text-2xl text-default-400 pointer-events-none"/>
-          ) }
+          )}
         </Button>
       }
       type={isPasswordVisible ? 'text' : 'password'}
@@ -235,9 +238,9 @@ export const SignUpForm = memo<SignUpFormProps>(function SignUpForm ({ className
       leaveTo="transform opacity-0 scale-95"
     >
       <div className="p-4 mb-0 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
-        role="alert">
+           role="alert">
         <div className="font-medium">Sign up error!</div>
-        <span>{ submitErrorMessage }</span>.
+        <span>{submitErrorMessage}</span>.
       </div>
     </Transition>
   </form>;

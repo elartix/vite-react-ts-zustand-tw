@@ -55,13 +55,13 @@ export const SignInForm = memo<SignInFormProps>(function SignInForm ({ className
   }, [errors, onSubmit]);
   console.log(errors);
 
-  return <form className={cn('grid grid-cols-1 gap-y-8', className)} noValidate onSubmit={handleSubmit(handleFormSubmit)}>
+  return <form className={cn('grid grid-cols-1 gap-y-4', className)} noValidate onSubmit={handleSubmit(handleFormSubmit)}>
     <Input
       type="text"
       label="Username"
       variant={'flat'}
       placeholder="Enter your username"
-      labelPlacement="outside"
+      labelPlacement="outside-top"
       startContent={
         <UserIcon className="h-4 text-2xl text-default-400 pointer-events-none flex-shrink-0"/>
       }
@@ -70,10 +70,11 @@ export const SignInForm = memo<SignInFormProps>(function SignInForm ({ className
       errorMessage={!_.isEmpty(_.get(errors, 'username.message')) && _.get(errors, 'username.message', null)}
       {...register('username')}
     />
+
     <Input
       label="Password"
       variant={'flat'}
-      labelPlacement="outside"
+      labelPlacement="outside-top"
       placeholder="Enter your password"
       startContent={
         <LockClosedIcon className="h-4 text-2xl text-default-400 pointer-events-none flex-shrink-0"/>
