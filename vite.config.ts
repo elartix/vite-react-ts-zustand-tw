@@ -4,6 +4,7 @@ import svgr from 'vite-plugin-svgr';
 import { VitePWA } from 'vite-plugin-pwa';
 import react from '@vitejs/plugin-react-swc';
 // import react from '@vitejs/plugin-react';
+import VitePluginHtmlEnv from 'vite-plugin-html-env';
 import envCompatible from 'vite-plugin-env-compatible';
 import EnvironmentPlugin from 'vite-plugin-environment';
 import { type ConfigEnv, defineConfig, loadEnv } from 'vite';
@@ -56,6 +57,11 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
     publicDir: 'public',
     plugins: [
       envCompatible(),
+      /* VitePluginHtmlEnv({
+        prefix: '%',
+        suffix: '%',
+        envPrefixes: ['VITE_', 'VITE_APP_', 'REACT_APP_']
+      }), */
       EnvironmentPlugin('all', { prefix: 'VITE_APP_' }),
       EnvironmentPlugin('all', { prefix: 'REACT_APP_' }),
       react({
@@ -73,6 +79,9 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
           short_name: env.REACT_APP_SHORT_NAME,
           description: env.REACT_APP_DESCRIPTION
         }),
+        devOptions: {
+          enabled: !process.env.PRODUCTION, // Disable PWA in dev to avoid Service Worker interception
+        },
       }),
     ],
     server: {
