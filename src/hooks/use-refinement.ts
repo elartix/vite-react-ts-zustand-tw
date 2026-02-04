@@ -36,7 +36,8 @@ export default function useRefinement<T> (
   { debounce }: { debounce?: number } = {}
 ): Refinement<T> {
   const ctxRef = useRef<RefinementContext<T>>({ callback, debounce });
-  const refinement = useMemo(() => createRefinement(ctxRef), []);
+  // eslint-disable-next-line react-hooks/refs
+  const refinement = useMemo(() => createRefinement(ctxRef), [ctxRef]);
 
   useEffect(() => {
     ctxRef.current = { callback, debounce };
