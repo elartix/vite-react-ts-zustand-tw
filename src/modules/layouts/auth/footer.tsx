@@ -1,12 +1,12 @@
 // outsource dependencies
 import cn from 'classnames';
-import { memo, PropsWithChildren } from 'react';
+import { memo, type PropsWithChildren } from 'react';
 
 const footerYear = new Date().getFullYear();
 
 type AuthFooterLayoutProps = PropsWithChildren<{
-  className?: string;
-  classNameBody?: string;
+  className?: string,
+  classNameBody?: string
 }>;
 
 export const AuthFooter = memo<AuthFooterLayoutProps>(function AuthFooter ({ className }) {

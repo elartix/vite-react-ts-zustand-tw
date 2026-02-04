@@ -1,13 +1,13 @@
-import { useRef, DependencyList, MutableRefObject, useLayoutEffect, useEffect } from 'react';
+import { useRef, type DependencyList, type MutableRefObject, useLayoutEffect, useEffect } from 'react';
 
 interface IPosition {
   x: number;
-  y: number;
+  y: number
 }
 
 interface IScrollProps {
   prevPos: IPosition;
-  currPos: IPosition;
+  currPos: IPosition
 }
 
 export type MutableElementRef = MutableRefObject<HTMLElement | null | undefined>;
@@ -18,9 +18,9 @@ const zeroPosition = { x: 0, y: 0 };
 const getClientRect = (element?: HTMLElement | null | undefined) => element?.getBoundingClientRect();
 
 export type ScrollPosition = {
-  element?: MutableElementRef | undefined | null;
-  boundingElement?: MutableElementRef;
-  useWindow?: boolean;
+  element?: MutableElementRef | undefined | null,
+  boundingElement?: MutableElementRef,
+  useWindow?: boolean
 }
 
 const getScrollPosition = ({ element, useWindow, boundingElement }: ScrollPosition) => {
@@ -58,14 +58,13 @@ export const useScrollPosition = (
   boundingElement?: MutableElementRef,
 ): void => {
   const position = useRef(getScrollPosition({ element, useWindow, boundingElement }));
-
-  let throttleTimeout: ReturnType<typeof setTimeout> | null = null;
+  const throttleTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const callBack = () => {
     const currPos = getScrollPosition({ element, useWindow, boundingElement });
     effect({ prevPos: position.current, currPos });
     position.current = currPos;
-    throttleTimeout = null;
+    throttleTimeoutRef.current = null;
   };
 
   useIsomorphicLayoutEffect(() => {
@@ -75,8 +74,8 @@ export const useScrollPosition = (
 
     const handleScroll = () => {
       if (wait) {
-        if (!throttleTimeout) {
-          throttleTimeout = setTimeout(callBack, wait);
+        if (!throttleTimeoutRef.current) {
+          throttleTimeoutRef.current = setTimeout(callBack, wait);
         }
       } else {
         callBack();
@@ -98,8 +97,8 @@ export const useScrollPosition = (
         document.removeEventListener('scroll', handleScroll);
       }
 
-      if (throttleTimeout) {
-        clearTimeout(throttleTimeout);
+      if (throttleTimeoutRef.current) {
+        clearTimeout(throttleTimeoutRef.current);
       }
     };
   }, deps);

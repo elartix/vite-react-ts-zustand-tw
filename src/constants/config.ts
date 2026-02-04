@@ -37,7 +37,7 @@ function varBoolean (value?: string) {
   return /^(true|1)$/i.test(value as string);
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+ 
 // @ts-ignore
 function varArray (value?: string) {
   return value ? value.split(',') : void 0;

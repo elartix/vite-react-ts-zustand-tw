@@ -21,11 +21,11 @@ type CookieStorageType = typeof cookieStorage;
 
 
 export type AsyncStorageBindPath = {
-  name: string;
-  set: (value: any) => any;
-  get: () => any;
-  update: (value: any) => any;
-  isSupported: boolean;
+  name: string,
+  set: (value: any) => any,
+  get: () => any,
+  update: (value: any) => any,
+  isSupported: boolean,
   remove: () => any
 }
 

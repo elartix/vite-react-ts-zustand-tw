@@ -1,9 +1,9 @@
 // outsource dependencies
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
-import { Button } from "@heroui/react";
+import { Button } from '@heroui/react';
 import { Popover, Transition } from '@headlessui/react';
-import { Fragment, memo, PropsWithChildren } from 'react';
+import { Fragment, memo, type PropsWithChildren } from 'react';
 
 
 // local dependencies
@@ -13,19 +13,19 @@ import { useNavSticky } from '@/hooks/use-nav-sticky';
 
 
 type MainHeaderLayoutProps = PropsWithChildren<{
-  className?: string;
+  className?: string
 }>;
 
 type HeaderNavLinkProps = PropsWithChildren<{
-  href: string;
+  href: string
 }>;
 
 type MobileNavLinkProps = PropsWithChildren<{
-  href: string;
+  href: string
 }>;
 
 type MobileNavIconProps = PropsWithChildren<{
-  open?: boolean;
+  open?: boolean
 }>;
 
 const HeaderNavLink = memo<HeaderNavLinkProps>(function HeaderNavLink ({ href, children }) {

@@ -5,7 +5,7 @@ import { createServer, Model, Factory, Response } from 'miragejs';
 
 
 // local dependencies
-import { UserModel, UserModelResponse } from '@/types/models/user.ts';
+import { type UserModel, type UserModelResponse } from '@/types/models/user.ts';
 
 
 export const fetchUsers = (url: string) =>

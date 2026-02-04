@@ -3,7 +3,7 @@ import { create } from 'zustand';
 
 
 // local dependencies
-import { UserModel } from '@/types/models/user.ts';
+import { type UserModel } from '@/types/models/user.ts';
 
 
 // Define the interface of the state

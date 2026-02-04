@@ -4,9 +4,9 @@ import { z } from 'zod';
 import cn from 'classnames';
 import { useForm } from 'react-hook-form';
 import { Transition } from '@headlessui/react';
-import { Button, Input } from "@heroui/react";
+import { Button, Input } from '@heroui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { memo, PropsWithChildren, useCallback, useState } from 'react';
+import { memo, type PropsWithChildren, useCallback, useState } from 'react';
 import { EyeIcon, EyeSlashIcon, LockClosedIcon, UserIcon } from '@heroicons/react/24/solid';
 
 
@@ -26,9 +26,9 @@ const SignInFormSchema = z.object({
 export type SignInFormType = z.infer<typeof SignInFormSchema>;
 
 type SignInFormProps = PropsWithChildren<{
-  className?: string
-  onSubmitErrorMessage?: string | null
-  onSubmit: (data: SignInFormType) => void;
+  className?: string,
+  onSubmitErrorMessage?: string | null,
+  onSubmit: (data: SignInFormType) => void
 }>;
 
 export const SignInForm = memo<SignInFormProps>(function SignInForm ({ className, onSubmit, onSubmitErrorMessage }) {
@@ -123,7 +123,7 @@ export const SignInForm = memo<SignInFormProps>(function SignInForm ({ className
       leaveTo="transform opacity-0 scale-95"
     >
       <div className="p-4 mb-0 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
-           role="alert">
+        role="alert">
         <div className="font-medium">Sign in error!</div>
         <span>{ onSubmitErrorMessage }</span>.
       </div>

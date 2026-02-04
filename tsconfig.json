@@ -41,8 +41,13 @@
     "./src/**/*.ts",
     "./src/**/*.tsx",
     "./src/types/**/*.d.ts",
-    "./tailwind.config.ts"
   ],
-  "exclude": ["build/**/*", "dist/**/*"],
+  "exclude": [
+    "build/**/*",
+    "dist/**/*",
+    ".cache/**/*",
+    "./tailwind.config.ts",
+    "./vite-pwa.config.ts"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

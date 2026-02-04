@@ -1,12 +1,12 @@
 // outsource dependencies
 import cn from 'classnames';
-import { memo, PropsWithChildren } from 'react';
+import { memo, type PropsWithChildren } from 'react';
 
 
 // local dependencies
 
 type MainFooterLayoutProps = PropsWithChildren<{
-  className?: string;
+  className?: string
 }>;
 
 export const Footer = memo<MainFooterLayoutProps>(function Footer ({ className }) {

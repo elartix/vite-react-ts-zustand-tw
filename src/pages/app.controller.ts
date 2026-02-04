@@ -6,7 +6,7 @@ import { devtools, persist } from 'zustand/middleware';
 
 // local dependencies
 import { config } from '@/constants';
-import { UserModel } from '@/types/models/user.ts';
+import { type UserModel } from '@/types/models/user.ts';
 import { storeLogger } from '@/services/store-logger';
 
 
@@ -21,8 +21,8 @@ export type AppState = {
 }
 
 export type AppAction = {
-  initialize: (state: Partial<AppState | NonNullable<unknown>>) => void
-  updateFirstName: (firstName: AppState['firstName']) => void
+  initialize: (state: Partial<AppState | NonNullable<unknown>>) => void,
+  updateFirstName: (firstName: AppState['firstName']) => void,
   updateLastName: (lastName: AppState['lastName']) => void
 }
 
@@ -57,8 +57,8 @@ export const useAppControllerStore = create<AppControllerStateAction>()(
               set((state) => {
                 return {
                   ...state,
-                  health: false,
-                  initialized: false
+                  health: true,
+                  initialized: true
                 };
               });
             }

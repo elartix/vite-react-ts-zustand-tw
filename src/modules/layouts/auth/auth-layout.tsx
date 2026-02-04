@@ -1,6 +1,6 @@
 // outsource dependencies
 import cn from 'classnames';
-import { memo, PropsWithChildren } from 'react';
+import { memo, type PropsWithChildren } from 'react';
 
 
 // local dependencies
@@ -9,8 +9,8 @@ import { BodyClassName } from '@/components/body-class-name';
 
 
 type AuthLayoutProps = PropsWithChildren<{
-  className?: string;
-  classNameBody?: string;
+  className?: string,
+  classNameBody?: string
 }>;
 
 export const AuthLayout = memo<AuthLayoutProps>(function AuthLayout ({ className, classNameBody, children }) {

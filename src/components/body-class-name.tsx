@@ -1,13 +1,13 @@
 // outsource dependencies
 import _ from 'lodash';
-import { Children, cloneElement, isValidElement, memo, PropsWithChildren, useEffect } from 'react';
+import { Children, cloneElement, isValidElement, memo, type PropsWithChildren, useEffect } from 'react';
 
 
 const addBodyClass = (className: string) => document.body.classList.add(className);
 const removeBodyClass = (className: string) => document.body.classList.remove(className);
 
 interface IBodyClassName {
-  className?: string;
+  className?: string
 }
 
 export const BodyClassName = memo<PropsWithChildren<IBodyClassName>>(function BodyClassName ({ className, children }) {

@@ -6,14 +6,14 @@ import _ from 'lodash';
 import Param from './param';
 
 export interface RouteOptions {
-  REGEXP?: RegExp
-  query?: Array<Param<any, any>>
-  params?: Array<Param<any, any>>
-  isActive?: (url: string) => boolean
-  parsePath?: (value: string) => { [key: string]: any; }
-  parseQuery?: (value: string) => { [key: string]: any; }
-  formatPath?: (params: { [key: string]: any; }) => string
-  formatQuery?: (params: { [key: string]: any; }) => string
+  REGEXP?: RegExp;
+  query?: Array<Param<any, any>>;
+  params?: Array<Param<any, any>>;
+  isActive?: (url: string) => boolean;
+  parsePath?: (value: string) => { [key: string]: any };
+  parseQuery?: (value: string) => { [key: string]: any };
+  formatPath?: (params: { [key: string]: any }) => string;
+  formatQuery?: (params: { [key: string]: any }) => string
 }
 
 export type ParamType = number | string | Array<unknown>
@@ -40,8 +40,8 @@ export default class Route {
 
   static getPathname = () => String(_.get(window, 'location.pathname') || '');
 
-  private formatQuery: (params: { [key: string]: any; }) => string = params => {
-    const result: { [key: string]: any; } = {};
+  private formatQuery: (params: { [key: string]: any }) => string = params => {
+    const result: { [key: string]: any } = {};
     _.forEach(params, (value, key) => {
       const r = _.find(this.query, { name: key });
       if (r) {
@@ -55,7 +55,7 @@ export default class Route {
   };
 
   private parseQuery = (queryString: string) => {
-    const result: { [key: string]: any; } = {};
+    const result: { [key: string]: any } = {};
     const params = qs.parse(queryString, { ignoreQueryPrefix: true });
     this.query.forEach(param => {
       const value = params[param.short] as string;
@@ -65,18 +65,18 @@ export default class Route {
   };
 
   private parsePath = (url: string) => {
-    const result: { [key: string]: any; } = {};
+    const result: { [key: string]: any } = {};
     // @ts-ignore
     const matcher = new RegExp(String(this.ROUTE).replace(Route.regParam, (a, propName) => `(?<${propName}>[^/]+)`), 'i');
-    const p: { [key: string]: any; } = _.get(String(url).match(matcher), 'groups', {});
+    const p: { [key: string]: any } = _.get(String(url).match(matcher), 'groups', {});
     this.params.forEach(param => {
       result[param.name] = param.from(p[param.name]);
     });
     return result;
   };
 
-  private formatPath = (params: { [key: string]: any; }) => {
-    const result: { [key: string]: any; } = {};
+  private formatPath = (params: { [key: string]: any }) => {
+    const result: { [key: string]: any } = {};
     this.params.forEach(param => {
       result[param.short] = param.from(params[param.name]);
     });
@@ -139,7 +139,7 @@ export default class Route {
     return annotation;
   };
 
-  LINK = (params?: { [key: string]: any; }, query?: { [key: string]: any; }) => {
+  LINK = (params?: { [key: string]: any }, query?: { [key: string]: any }) => {
     params = Object.assign({}, params);
     query = Object.assign({}, query);
     return `${this.formatPath(params)}${this.formatQuery(query)}`;

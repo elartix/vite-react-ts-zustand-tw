@@ -4,15 +4,15 @@ import { z } from 'zod';
 import cn from 'classnames';
 import { useForm } from 'react-hook-form';
 import { Transition } from '@headlessui/react';
-import { Button, Input } from "@heroui/react";
+import { Button, Input } from '@heroui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { memo, PropsWithChildren, useCallback, useState } from 'react';
+import { memo, type PropsWithChildren, useCallback, useState } from 'react';
 import { AtSymbolIcon, EyeIcon, EyeSlashIcon, LockClosedIcon, UserIcon } from '@heroicons/react/24/solid';
 
 
 // local dependencies
 import { ValidationRules } from '@/constants';
-import useRefinement, { RefinementCallback } from '@/hooks/use-refinement';
+import useRefinement, { type RefinementCallback } from '@/hooks/use-refinement';
 import { useSignUpControllerStore } from '@/pages/sign-up/sign-up.controller';
 
 
@@ -33,9 +33,9 @@ const SignUpFormSchema = z.object({
 export type SignUpFormType = z.infer<typeof SignUpFormSchema>;
 
 type SignUpFormProps = PropsWithChildren<{
-  className?: string
-  onSubmitErrorMessage?: string | null
-  onSubmit: (data: Partial<SignUpFormType>) => void;
+  className?: string,
+  onSubmitErrorMessage?: string | null,
+  onSubmit: (data: Partial<SignUpFormType>) => void
 }>;
 
 function checkUserNameToBeUnique (): RefinementCallback<{ username: string }> {
@@ -108,7 +108,7 @@ export const SignUpForm = memo<SignUpFormProps>(function SignUpForm ({ className
       leaveTo="transform opacity-0 scale-95"
     >
       <div className="p-4 mb-8 text-sm text-red-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-white overflow-x-auto "
-           role="alert">
+        role="alert">
         <div className="font-medium">User Created!</div>
         <span>
           You can check username { ' ' }
@@ -235,7 +235,7 @@ export const SignUpForm = memo<SignUpFormProps>(function SignUpForm ({ className
       leaveTo="transform opacity-0 scale-95"
     >
       <div className="p-4 mb-0 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
-           role="alert">
+        role="alert">
         <div className="font-medium">Sign up error!</div>
         <span>{ submitErrorMessage }</span>.
       </div>

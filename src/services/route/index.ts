@@ -4,8 +4,8 @@
 import { NEW_ID } from '@/constants';
 
 // local dependencies
-import Param, { ParamOptions } from './param';
-import Route, { RouteOptions } from './route';
+import Param, { type ParamOptions } from './param';
+import Route, { type RouteOptions } from './route';
 
 export const defineRoute = (
   url: string,

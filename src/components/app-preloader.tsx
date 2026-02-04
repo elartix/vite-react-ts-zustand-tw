@@ -1,7 +1,7 @@
 // outsource dependencies
 import cn from 'classnames';
-import { FC, memo } from 'react';
-import { Spinner } from "@heroui/react";
+import { type FC, memo } from 'react';
+import { Spinner } from '@heroui/react';
 
 
 // local dependencies

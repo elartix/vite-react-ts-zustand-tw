@@ -1,6 +1,6 @@
 // outsource dependencies
 import cn from 'classnames';
-import { memo, PropsWithChildren, useEffect, useState } from 'react';
+import { memo, type PropsWithChildren, useEffect, useState } from 'react';
 
 
 // local dependencies
@@ -23,6 +23,6 @@ export const Home = memo<PropsWithChildren<{ className?: string }>>(function Hom
 
   return <MainLayout className={cn('home-page', className)}>
     <Hero />
-    {/* <ContactForm /> */}
+    { /* <ContactForm /> */ }
   </MainLayout>;
 });

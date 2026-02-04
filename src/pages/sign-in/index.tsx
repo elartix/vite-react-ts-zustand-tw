@@ -2,14 +2,14 @@
 import _ from 'lodash';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
-import { memo, PropsWithChildren, useCallback } from 'react';
+import { memo, type PropsWithChildren, useCallback } from 'react';
 
 
 // local dependencies
 import * as ROUTE from '@/constants/routes';
 import { AuthLayout } from '@/modules/layouts';
 import { AppLogo } from '@/components/app-logo';
-import { SignInForm, SignInFormType } from '@/pages/sign-in/sign-in-form';
+import { SignInForm, type SignInFormType } from '@/pages/sign-in/sign-in-form';
 
 
 export const SignIn = memo<PropsWithChildren<{ className?: string }>>(function SignIn ({ className }) {

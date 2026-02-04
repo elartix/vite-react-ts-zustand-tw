@@ -2,14 +2,14 @@
 import _ from 'lodash';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
-import { memo, PropsWithChildren, useCallback, useEffect } from 'react';
+import { memo, type PropsWithChildren, useCallback, useEffect } from 'react';
 
 
 // local dependencies
 import * as ROUTE from '@/constants/routes';
 import { AuthLayout } from '@/modules/layouts';
 import { AppLogo } from '@/components/app-logo';
-import { SignUpForm, SignUpFormType } from '@/pages/sign-up/sign-up-form';
+import { SignUpForm, type SignUpFormType } from '@/pages/sign-up/sign-up-form';
 import { useSignUpControllerStore } from '@/pages/sign-up/sign-up.controller';
 
 

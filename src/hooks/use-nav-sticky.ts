@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { type MutableElementRef, useScrollPosition } from './use-scroll-position';
 
 export interface UseNavStickyOutput {
-  isSticky: boolean,
+  isSticky: boolean
 }
 
 export interface NavStickyOptions {
-  stickyScrollDelay?: number,
-  stickyScrollOffsetTrigger: number,
-  stickyScrollUseWindow?: boolean,
+  stickyScrollDelay?: number;
+  stickyScrollOffsetTrigger: number;
+  stickyScrollUseWindow?: boolean;
   stickyScrollElement?: MutableElementRef | undefined | null
 }
 

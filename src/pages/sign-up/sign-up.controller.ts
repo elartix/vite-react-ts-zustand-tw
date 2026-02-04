@@ -6,7 +6,7 @@ import { devtools, persist } from 'zustand/middleware';
 
 // local dependencies
 import { config } from '@/constants';
-import { UserModel } from '@/types/models/user';
+import { type UserModel } from '@/types/models/user';
 import { storeLogger } from '@/services/store-logger';
 
 
@@ -21,7 +21,7 @@ export type SignUpState = {
 }
 
 export type SignUpAction = {
-  initialize: (state: Partial<SignUpState | NonNullable<unknown>>) => void
+  initialize: (state: Partial<SignUpState | NonNullable<unknown>>) => void,
   signUp: (user: SignUpState['user']) => void,
   resetSubmitErrorMessage: () => void
 }

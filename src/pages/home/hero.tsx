@@ -1,8 +1,8 @@
 // outsource dependencies
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
-import { Button } from "@heroui/react";
-import { memo, PropsWithChildren } from 'react';
+import { Button } from '@heroui/react';
+import { memo, type PropsWithChildren } from 'react';
 
 
 // local dependencies

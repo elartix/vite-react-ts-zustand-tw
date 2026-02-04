@@ -2,11 +2,11 @@
 declare global {
   namespace NodeJS {
     interface Process {
-      env: ProcessEnv;
+      env: ProcessEnv
     }
 
     interface ProcessEnv extends ImportMetaEnv {
-      NODE_ENV: string;
+      NODE_ENV: string
     }
   }
 

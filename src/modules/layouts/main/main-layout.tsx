@@ -1,6 +1,6 @@
 // outsource dependencies
 import cn from 'classnames';
-import { memo, PropsWithChildren } from 'react';
+import { memo, type PropsWithChildren } from 'react';
 
 
 // local dependencies
@@ -10,8 +10,8 @@ import { BodyClassName } from '@/components/body-class-name';
 
 
 type MainLayoutProps = PropsWithChildren<{
-  className?: string;
-  classNameBody?: string;
+  className?: string,
+  classNameBody?: string
 }>;
 
 export const MainLayout = memo<MainLayoutProps>(function MainLayout ({ className, classNameBody, children }) {

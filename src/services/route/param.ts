@@ -1,11 +1,11 @@
 import _ from 'lodash';
 
 export interface ParamOptions<Type, Default> {
-  name: string
-  short?: string
-  defaults?: Type | Default | null
-  isValid?: (value: Type | Default | string) => boolean
-  archive?: (param: Type | Default) => string
+  name: string;
+  short?: string;
+  defaults?: Type | Default | null;
+  isValid?: (value: Type | Default | string) => boolean;
+  archive?: (param: Type | Default) => string;
   extract?: (param: string) => Type | string
 }
 

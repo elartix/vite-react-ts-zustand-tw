@@ -177,9 +177,9 @@ export default [
       ],
       'id-blacklist': [
         'warn',
-        'err',
-        'cb',
-        'callback'
+        // 'err',
+        // 'cb',
+        // 'callback'
       ],
       'import/named': ['error'],
       'import/newline-after-import': 'warn',
@@ -717,7 +717,7 @@ export default [
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/ban-ts-comment': ['warn', {
         'ts-expect-error': 'allow-with-description',
-        'ts-ignore': 'allow-with-description',
+        'ts-ignore': false, //'allow-with-description',
         'ts-nocheck': true,
         'ts-check': false,
         minimumDescriptionLength: 3,

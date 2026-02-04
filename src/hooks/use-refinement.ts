@@ -1,4 +1,4 @@
-import { MutableRefObject, useEffect, useRef } from 'react';
+import { type RefObject, useEffect, useMemo, useRef } from 'react';
 
 export interface Refinement<T> {
   /**
@@ -9,11 +9,11 @@ export interface Refinement<T> {
   /**
    * Method to invalidate the refinement and allow re-performing
    */
-  invalidate(): void;
+  invalidate(): void
 }
 
 export interface RefinementCallback<T> {
-  (data: T, ctx: { signal: AbortSignal }): boolean | Promise<boolean>; // Callback function signature
+  (data: T, ctx: { signal: AbortSignal }): boolean | Promise<boolean> // Callback function signature
 }
 
 /**
@@ -35,30 +35,24 @@ export default function useRefinement<T> (
   callback: RefinementCallback<T>,
   { debounce }: { debounce?: number } = {}
 ): Refinement<T> {
-  const ctxRef = useRef() as MutableRefObject<RefinementContext<T>>;
-  const refinementRef = useRef() as MutableRefObject<{
-    refine: Refinement<T>;
-    abort(): void;
-  }>;
+  const ctxRef = useRef<RefinementContext<T>>({ callback, debounce });
+  const refinement = useMemo(() => createRefinement(ctxRef), []);
 
-  ctxRef.current = { callback, debounce };
+  useEffect(() => {
+    ctxRef.current = { callback, debounce };
+  }, [callback, debounce]);
 
-  if (refinementRef.current == null) {
-    refinementRef.current = createRefinement(ctxRef);
-  }
+  useEffect(() => () => refinement.abort(), [refinement]);
 
-  // Cleanup effect to abort ongoing refinement when the component unmounts
-  useEffect(() => () => refinementRef.current.abort(), []);
-
-  return refinementRef.current.refine;
+  return refinement.refine;
 }
 
 interface RefinementContext<T> {
   callback: RefinementCallback<T>;
-  debounce?: number;
+  debounce?: number
 }
 
-function createRefinement<T> (ctxRef: MutableRefObject<RefinementContext<T>>) {
+function createRefinement<T> (ctxRef: RefObject<RefinementContext<T>>) {
   let abortController: AbortController | null = null;
   let result: Promise<boolean> | null = null;
   let timeout: ReturnType<typeof setTimeout> | null = null;
