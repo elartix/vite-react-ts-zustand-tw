@@ -29,6 +29,8 @@
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
 
+    "erasableSyntaxOnly": false,
+
     "types": ["node", "@testing-library/jest-dom"],
     "paths": {
       "@/*": ["./src/*"]

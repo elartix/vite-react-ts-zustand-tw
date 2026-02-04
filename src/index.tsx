@@ -2,7 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 // @ts-ignore
-import { NextUIProvider } from '@nextui-org/react';
+import { HeroUIProvider } from "@heroui/react";
 
 // local dependencies
 import './assets/styles/index.scss';
@@ -20,8 +20,8 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
 root.render(
   <React.StrictMode>
-    <NextUIProvider>
+    <HeroUIProvider>
       <App />
-    </NextUIProvider>
+    </HeroUIProvider>
   </React.StrictMode>
 );

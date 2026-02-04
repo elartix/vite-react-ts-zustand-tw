@@ -4,7 +4,7 @@ import { z } from 'zod';
 import cn from 'classnames';
 import { useForm } from 'react-hook-form';
 import { Transition } from '@headlessui/react';
-import { Button, Input } from '@nextui-org/react';
+import { Button, Input } from "@heroui/react";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { memo, PropsWithChildren, useCallback, useState } from 'react';
 import { AtSymbolIcon, EyeIcon, EyeSlashIcon, LockClosedIcon, UserIcon } from '@heroicons/react/24/solid';

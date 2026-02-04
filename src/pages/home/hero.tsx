@@ -1,7 +1,7 @@
 // outsource dependencies
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
-import { Button } from '@nextui-org/react';
+import { Button } from "@heroui/react";
 import { memo, PropsWithChildren } from 'react';
 
 

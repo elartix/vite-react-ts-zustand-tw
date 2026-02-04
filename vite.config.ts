@@ -4,10 +4,9 @@ import svgr from 'vite-plugin-svgr';
 import { VitePWA } from 'vite-plugin-pwa';
 import react from '@vitejs/plugin-react-swc';
 // import react from '@vitejs/plugin-react';
-import VitePluginHtmlEnv from 'vite-plugin-html-env';
 import envCompatible from 'vite-plugin-env-compatible';
 import EnvironmentPlugin from 'vite-plugin-environment';
-import { type ConfigEnv, defineConfig, loadEnv, splitVendorChunkPlugin } from 'vite';
+import { type ConfigEnv, defineConfig, loadEnv } from 'vite';
 
 import { getPWAConfig, PWAConfig } from './vite-pwa.config';
 
@@ -16,6 +15,7 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
   const env = loadEnv(mode, process.cwd(), '');
 
   return {
+    // appType: 'custom',
     build: {
       outDir: 'dist',
       assetsDir: 'assets',
@@ -56,14 +56,8 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
     publicDir: 'public',
     plugins: [
       envCompatible(),
-      VitePluginHtmlEnv({
-        prefix: '%',
-        suffix: '%',
-        envPrefixes: ['VITE_', 'VITE_APP_', 'REACT_APP_']
-      }),
       EnvironmentPlugin('all', { prefix: 'VITE_APP_' }),
       EnvironmentPlugin('all', { prefix: 'REACT_APP_' }),
-      // eslintPlugin({ cache: false }),
       react({
         // jsxRuntime: 'classic'
         // Removes React Devtools in production build
@@ -73,12 +67,13 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
         // exclude: /\.stories\.(t|j)sx?$/,
       }),
       svgr(),
-      VitePWA(getPWAConfig({
-        name: env.REACT_APP_TITLE,
-        short_name: env.REACT_APP_SHORT_NAME,
-        description: env.REACT_APP_DESCRIPTION
-      })),
-      splitVendorChunkPlugin()
+      VitePWA({
+        ...getPWAConfig({
+          name: env.REACT_APP_TITLE,
+          short_name: env.REACT_APP_SHORT_NAME,
+          description: env.REACT_APP_DESCRIPTION
+        }),
+      }),
     ],
     server: {
       host: process.env.HOST || 'localhost',

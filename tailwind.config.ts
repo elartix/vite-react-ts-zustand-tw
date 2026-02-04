@@ -1,6 +1,6 @@
 import type { Config } from 'tailwindcss';
 
-import { nextui } from '@nextui-org/react';
+import { heroui } from '@heroui/react';
 import formsPlugin from '@tailwindcss/forms';
 import uiPlugin from '@headlessui/tailwindcss';
 // @ts-ignore
@@ -15,7 +15,7 @@ const config: Config = {
   content: [
     './index.html',
     './src/**/*.{js,ts,jsx,tsx}',
-    './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
+    "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   darkMode: ['class', '[data-mode="dark"]'],
   theme: {
@@ -95,7 +95,7 @@ const config: Config = {
     typographyPlugin,
     aspectRatioPlugin,
     hideScrollbarPlugin,
-    nextui({
+    heroui({
       prefix: 'nsui', // prefix for themes variables
       themes: {
         light: {

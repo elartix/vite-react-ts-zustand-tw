@@ -1,8 +1,9 @@
+@use "sass:meta";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import "main-layout-navbar";
+@include meta.load-css("main-layout-navbar");
 
 
 * {

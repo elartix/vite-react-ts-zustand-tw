@@ -36,7 +36,7 @@ const generateFakeUserFactory = () => Factory.extend<Partial<UserModel>>({
     return faker.phone.number();
   },
   get username () {
-    return faker.internet.userName({ firstName: this.firstName as string, lastName: this.lastName as string });
+    return faker.internet.username({ firstName: this.firstName as string, lastName: this.lastName as string });
   },
   get password () {
     return faker.internet.password({ length: 9, pattern: /[a-zA-Z0-9!@#$%^&*)(+=._-]/ });
@@ -45,7 +45,7 @@ const generateFakeUserFactory = () => Factory.extend<Partial<UserModel>>({
     return faker.internet.email({ firstName: this.firstName as string, lastName: this.lastName as string });
   },
   get avatar () {
-    return faker.internet.avatar();
+    return faker.image.avatar();
   },
 });
 
@@ -94,7 +94,7 @@ export function makeServer ({ environment = 'test' }) {
           return faker.phone.number();
         },
         username () {
-          return faker.internet.userName({ firstName: this.firstName as string, lastName: this.lastName as string });
+          return faker.internet.username({ firstName: this.firstName as string, lastName: this.lastName as string });
         },
         password () {
           return faker.internet.password({ length: 9, pattern: /[a-zA-Z0-9!@#$%^&*)(+=._-]/ });
@@ -103,7 +103,7 @@ export function makeServer ({ environment = 'test' }) {
           return faker.internet.email({ firstName: this.firstName as string, lastName: this.lastName as string });
         },
         avatar () {
-          return faker.internet.avatar();
+          return faker.image.avatar();
         },
       }),
     },
@@ -126,8 +126,15 @@ export function makeServer ({ environment = 'test' }) {
 
     routes () {
       // this.urlPrefix = 'http://localhost:9443'
+      // this.urlPrefix = window.location.origin;
       this.namespace = '/api';
-      this.timing = 550;
+      this.timing = 600;
+
+      // this.passthrough();
+      // this.passthrough('/src/**');
+      // this.passthrough('/node_modules/**');
+      // this.passthrough('/@vite/**');
+      // this.passthrough('/@react-refresh');
 
       this.get('/users', (schema, request) => {
         // @ts-ignore
@@ -154,6 +161,9 @@ export function makeServer ({ environment = 'test' }) {
       });
 
       this.get('/actuator/health', () => ({
+        status: 'UP',
+      }));
+      this.get('/api/actuator/health', () => ({
         status: 'UP',
       }));
 
@@ -260,6 +270,8 @@ export function makeServer ({ environment = 'test' }) {
         console.log(attrs)
         debugger
       }) */
+
+      this.passthrough();
     },
   });
 }

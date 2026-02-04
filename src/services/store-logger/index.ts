@@ -15,12 +15,13 @@ type StoreLoggerImpl = <T>(
 ) => StateCreator<T, [], []>;
 
 const storeLoggerImpl: StoreLoggerImpl = (f, name) => (set, get, store) => {
-  const loggedSet: typeof set = (...a) => {
-    set(...a);
+  const loggedSet: typeof set = ((partial: unknown, replace?: unknown) => {
+    set(partial as never, replace as never);
     if (import.meta.env.DEV) {
       console.log(...(name ? [`${name}:`] : []), get());
     }
-  };
+  }) as typeof set;
+
   store.setState = loggedSet;
 
   return f(loggedSet, get, store);

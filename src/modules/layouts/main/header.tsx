@@ -1,7 +1,7 @@
 // outsource dependencies
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
-import { Button } from '@nextui-org/react';
+import { Button } from "@heroui/react";
 import { Popover, Transition } from '@headlessui/react';
 import { Fragment, memo, PropsWithChildren } from 'react';
 

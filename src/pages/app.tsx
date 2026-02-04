@@ -1,7 +1,8 @@
 // outsource dependencies
 import useVH from 'react-vh';
 import { memo, useEffect } from 'react';
-import { Switch, Router, Route } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
+import { HistoryRouter as Router } from 'redux-first-history/rr6';
 
 
 // local dependencies
@@ -33,15 +34,16 @@ export const App = memo(function App () {
 
   return <>
     <Router history={history}>
-      <Switch>
-        <Route exact path={ROUTE.HOME.ROUTE} component={Home} />
-        <Route path={ROUTE.SIGN_IN.ROUTE} component={SignIn} />
-        <Route path={ROUTE.SIGN_UP.ROUTE} component={SignUp} />
+      <Routes>
+        <Route path={ROUTE.HOME.ROUTE} element={<Home />} />
+        <Route path={ROUTE.SIGN_IN.ROUTE} element={<SignIn />} />
+        <Route path={ROUTE.SIGN_UP.ROUTE} element={<SignUp />} />
+        <Route path="*" element={<Navigate to="/" />} />
         { /* direct 404 */ }
-        <Route path={ROUTE.NO_MATCH.ROUTE} component={NotFound} />
+        <Route path={ROUTE.NO_MATCH.ROUTE} element={<NotFound />} />
         { /* as 404 */ }
-        <Route component={NotFound} />
-      </Switch>
+        <Route element={<NotFound />} />
+      </Routes>
     </Router>
   </>;
 });
