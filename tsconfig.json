@@ -1,53 +1,16 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig.json",
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ],
   "compilerOptions": {
-    "target": "ES2020",
-    "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "allowJs": true,
-    "skipLibCheck": true,
-
-    /* Bundler mode */
-    /* "moduleResolution": "bundler", */
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "allowImportingTsExtensions": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-    "sourceMap": true,
-    "incremental": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-
-    /* Linting */
+    "baseUrl": ".",
     "strict": true,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "noFallthroughCasesInSwitch": true,
-
-    "erasableSyntaxOnly": false,
-
-    "types": ["node", "@testing-library/jest-dom"],
+    "forceConsistentCasingInFileNames": true,
     "paths": {
       "@/*": ["./src/*"]
     }
-  },
-  "include": [
-    "./mocks",
-    "./src/**/*.ts",
-    "./src/**/*.tsx",
-    "./src/types/**/*.d.ts",
-  ],
-  "exclude": [
-    "build/**/*",
-    "dist/**/*",
-    ".cache/**/*",
-    "./tailwind.config.ts",
-    "./vite-pwa.config.ts"
-  ],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  }
 }
