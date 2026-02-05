@@ -80,6 +80,8 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
       }),
       svgr(),
       VitePWA({
+        registerType: 'autoUpdate',
+        injectRegister: 'auto',
         ...getPWAConfig({
           name: env.REACT_APP_TITLE,
           short_name: env.REACT_APP_SHORT_NAME,

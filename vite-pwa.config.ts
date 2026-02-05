@@ -1,4 +1,4 @@
-import { type VitePWAOptions } from 'vite-plugin-pwa';
+import { type ManifestOptions, type VitePWAOptions } from 'vite-plugin-pwa';
 
 export const PWAConfig: Partial<VitePWAOptions> = {
   includeAssets: [
@@ -70,7 +70,7 @@ export const PWAConfig: Partial<VitePWAOptions> = {
   },
 };
 
-export const getPWAConfig = ({ name, short_name, description }): Partial<VitePWAOptions> => ({
+export const getPWAConfig = ({ name, short_name, description }: Partial<ManifestOptions>): Partial<VitePWAOptions> => ({
   ...PWAConfig,
   manifest: {
     ...PWAConfig.manifest,
