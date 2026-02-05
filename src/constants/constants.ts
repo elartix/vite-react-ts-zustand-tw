@@ -7,23 +7,31 @@ export const CURRENCY = {
   USD: 'USD', // US Dollar
   EUR: 'EUR', // Euro
   UAH: 'UAH', // Grivna
-};
+} as const;
+
+export type Currency = typeof CURRENCY[keyof typeof CURRENCY];
 
 export const CURRENCY_SYMBOL = {
   [CURRENCY.USD]: '$',
   [CURRENCY.EUR]: '€',
   [CURRENCY.UAH]: '₴'
-};
+} as const;
 
-export enum ROLE {
-  USER = 'User',
-  ADMIN = 'Admin',
-}
+export type CurrencySymbol = typeof CURRENCY_SYMBOL[keyof typeof CURRENCY_SYMBOL];
+
+export const ROLE = {
+  USER: 'User',
+  ADMIN: 'Admin',
+} as const;
+
+export type Role = typeof ROLE[keyof typeof ROLE];
 
 export const ROLE_LABEL = {
   [ROLE.USER]: 'User',
   [ROLE.ADMIN]: 'Admin',
-};
+} as const;
+
+export type RoleLabel = typeof ROLE_LABEL[keyof typeof ROLE_LABEL];
 
 export enum REGISTER_REQUEST_STATUS {
   CREATED = 'Created',
