@@ -1,6 +1,6 @@
 // outsource dependencies
-// import { Faker, en, base } from '@faker-js/faker';
-import { faker } from '@faker-js/faker/locale/base';
+import { Faker, en, base } from '@faker-js/faker';
+// import { faker } from '@faker-js/faker/locale/base';
 import { get as _get, isEmpty, isEqual } from 'es-toolkit/compat';
 import { createServer, Model, Factory, Response } from 'miragejs';
 
@@ -9,7 +9,7 @@ import { createServer, Model, Factory, Response } from 'miragejs';
 import { type UserModel, type UserModelResponse } from '@/types/models/user';
 
 // configure
-// const faker = new Faker({ locale: [en, base]});
+const faker = new Faker({ locale: [en, base]});
 
 export const fetchUsers = (url: string) =>
   fetch(url).then<UserModelResponse>((r) => r.json());
