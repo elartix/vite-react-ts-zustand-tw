@@ -1,5 +1,5 @@
 // local dependencies
-import { type ROLE } from '@/constants';
+import { type Role } from '@/constants';
 
 export type UserModel = {
   id: string,
@@ -13,7 +13,7 @@ export type UserModel = {
   password: string,
   email: string,
   avatar: string,
-  role: ROLE
+  role: Role
 };
 
 export type UserModelResponse = {
