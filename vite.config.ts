@@ -4,6 +4,7 @@ import svgr from 'vite-plugin-svgr';
 import { VitePWA } from 'vite-plugin-pwa';
 import react from '@vitejs/plugin-react-swc';
 // import react from '@vitejs/plugin-react';
+import tsconfigPaths from 'vite-tsconfig-paths';
 import VitePluginHtmlEnv from 'vite-plugin-html-env';
 import envCompatible from 'vite-plugin-env-compatible';
 import EnvironmentPlugin from 'vite-plugin-environment';
@@ -14,6 +15,7 @@ import { getPWAConfig, PWAConfig } from './vite-pwa.config';
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }: ConfigEnv) => {
   const env = loadEnv(mode, process.cwd(), '');
+  const isSourceMap = /^(true|1)$/i.test(env.GENERATE_SOURCEMAP as string) || false;
 
   return {
     // appType: 'custom',
@@ -21,7 +23,7 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
       outDir: 'dist',
       assetsDir: 'assets',
       emptyOutDir: true,
-      sourcemap: process.env.GENERATE_SOURCEMAP as unknown as boolean || true,
+      sourcemap: isSourceMap,
       commonjsOptions: {
         strictRequires: [
           new RegExp('@fortawesome\/[\\w]+-[\\w]+-svg-icons\/fa[\\w]+\.js')
@@ -59,6 +61,7 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
     cacheDir: './.cache',
     publicDir: 'public',
     plugins: [
+      tsconfigPaths(),
       envCompatible(),
       /* VitePluginHtmlEnv({
         prefix: '%',
@@ -83,12 +86,17 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
           description: env.REACT_APP_DESCRIPTION
         }),
         devOptions: {
-          enabled: !process.env.PRODUCTION, // Disable PWA in dev to avoid Service Worker interception
+          enabled: !env.PRODUCTION, // Disable PWA in dev to avoid Service Worker interception
+        },
+        workbox: {
+          sourcemap: isSourceMap,
+          maximumFileSizeToCacheInBytes: 4 * 1024 * 1024, // limit up 4 MiB
+          globIgnores: ['**/@faker-js-*.js'], // exclude Faker у precache
         },
       }),
     ],
     server: {
-      host: process.env.HOST || 'localhost',
+      host: env.HOST || 'localhost',
       // @ts-ignore
       /* https: (process.env.HTTPS && {
         key: fs.readFileSync(process.env.SSL_KEY_FILE),
@@ -97,7 +105,7 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
       // this ensures that the browser opens upon server start
       open: true,
       // this sets a default port to 3000
-      port: process.env.PORT as unknown as number || 5173,
+      port: env.PORT as unknown as number || 5173,
     }
   };
 });
