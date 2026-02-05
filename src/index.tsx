@@ -1,27 +1,31 @@
 // outsource dependencies
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 // @ts-ignore
 import { HeroUIProvider } from '@heroui/react';
 
 // local dependencies
 import './assets/styles/index.scss';
 import { App } from './pages/app.tsx';
-
 import { config } from '@/constants';
 import { makeServer } from '@/mock-server';
+import reportWebVitals from '@/report-web-vitals';
 
 if (!config('PRODUCTION')) {
   makeServer({ environment: config('SID') });
 }
 
-// const container = document.getElementById('root') as HTMLElement;
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+const root = createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
-  <React.StrictMode>
+  <StrictMode>
     <HeroUIProvider>
-      <App />
+      <App/>
     </HeroUIProvider>
-  </React.StrictMode>
+  </StrictMode>
 );
+
+reportWebVitals(({ name, id, delta }) => {
+  console.log(`${name} matching ID ${id} changed by ${delta}`);
+});
+
