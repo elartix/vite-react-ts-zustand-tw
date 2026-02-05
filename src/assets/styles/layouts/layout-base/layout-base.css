@@ -1,0 +1,5 @@
+@layer base  {
+  .base-layout {
+    @apply flex flex-col h-screen-vh;
+  }
+}

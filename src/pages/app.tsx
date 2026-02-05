@@ -11,6 +11,7 @@ import { Home } from '@/pages/home';
 import { SignIn } from '@/pages/sign-in';
 import { SignUp } from '@/pages/sign-up';
 import * as ROUTE from '@/constants/routes';
+import { AppProvider } from '@/pages/app.provider';
 import { AppPreloader } from '@/components/app-preloader';
 import { useAppControllerStore } from '@/pages/app.controller';
 import { Maintenance, NotFound } from '@/components/error-pages';
@@ -46,17 +47,19 @@ export const App = memo(function App () {
       )}
     >
       <Router unstable_useTransitions>
-        <Routes>
-          <Route path={ROUTE.HOME.ROUTE} element={<Home/>}/>
-          <Route path={ROUTE.SIGN_IN.ROUTE} element={<SignIn/>}/>
-          <Route path={ROUTE.SIGN_UP.ROUTE} element={<SignUp/>}/>
-          { /* <Route path="*" element={<Navigate to="/"/>}/> */ }
-          <Route path="*" element={<Navigate to={ROUTE.NO_MATCH.ROUTE}/>}/>
-          { /* direct 404 */ }
-          <Route path={ROUTE.NO_MATCH.ROUTE} element={<NotFound/>}/>
-          { /* as 404 */ }
-          <Route element={<NotFound/>}/>
-        </Routes>
+        <AppProvider>
+          <Routes>
+            <Route path={ROUTE.HOME.ROUTE} element={<Home/>}/>
+            <Route path={ROUTE.SIGN_IN.ROUTE} element={<SignIn/>}/>
+            <Route path={ROUTE.SIGN_UP.ROUTE} element={<SignUp/>}/>
+            { /* <Route path="*" element={<Navigate to="/"/>}/> */ }
+            <Route path="*" element={<Navigate to={ROUTE.NO_MATCH.ROUTE}/>}/>
+            { /* direct 404 */ }
+            <Route path={ROUTE.NO_MATCH.ROUTE} element={<NotFound/>}/>
+            { /* as 404 */ }
+            <Route element={<NotFound/>}/>
+          </Routes>
+        </AppProvider>
       </Router>
     </ErrorBoundary>
   </>;

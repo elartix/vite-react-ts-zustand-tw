@@ -1,0 +1,43 @@
+@layer compments {
+  .navbar {
+    @apply absolute transition ease-linear duration-150 w-full z-[25] top-0 translate-y-0;
+
+    &.is-opened {
+      @apply backdrop-blur-[5px];
+
+      /*@media (prefers-color-scheme: light) {
+        @apply bg-white/95;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        @apply bg-midnight/95;
+      }*/
+    }
+
+    &.fixed-top {
+      @apply fixed top-0 right-0 left-0 translate-y-0 shadow animate-navbar-move backdrop-blur-[5px];
+
+      /*@media (prefers-color-scheme: light) {
+        @apply bg-white/80;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        @apply bg-midnight/80;
+      }*/
+    }
+
+    &.fixed-bottom {
+      @apply fixed right-0 bottom-0 left-0 translate-y-0 shadow animate-navbar-move backdrop-blur-sm;
+
+      /*@media (prefers-color-scheme: light) {
+        @apply bg-white/80;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        @apply bg-midnight/80;
+      }*/
+    }
+  }
+}
+
+

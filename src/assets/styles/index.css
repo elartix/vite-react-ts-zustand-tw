@@ -1,0 +1,98 @@
+/*@use "sass:meta";*/
+/*//@tailwind base;*/
+/*//@tailwind components;*/
+/*//@tailwind utilities;*/
+/*@import "tailwindcss";*/
+/*//@import "tw-animate-css";*/
+
+/* tailwind v4*/
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "layouts/index.css";
+
+/* Optional: Load your tailwind.config.ts if you still need it */
+@config "../../../tailwind.config.ts";
+
+html {
+  touch-action: manipulation;
+  -ms-touch-action: manipulation;
+  scroll-behavior: smooth;
+}
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+
+  .border {
+    @apply border-gray-200 dark:border-gray-600;
+  }
+
+  html {
+    @apply scroll-pt-8;
+    /*// navbar-height/2 - h-16 it's 4rem / 2 = 8*/
+    touch-action: manipulation;
+    -ms-touch-action: manipulation;
+    scroll-behavior: smooth;
+    scrollbar-gutter: stable;
+  }
+
+  html, body, #root, #__next, #root, #root > div {
+    /*//@apply h-full min-h-full max-w-screen;*/
+    @apply h-full min-h-full;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    color: rgb(var(--foreground-rgb));
+    scrollbar-gutter: stable;
+  }
+
+  /*
+    Default button style missing pointer cursor property
+    Issue: https://github.com/tailwindlabs/tailwindcss/issues/15773
+  */
+  button, [role="button"] {
+    cursor: pointer;
+  }
+
+  /*
+    Make sure disabled buttons don't get the pointer cursor.
+  */
+  :disabled {
+    cursor: default;
+  }
+
+  .main-layout {
+    @apply flex flex-col h-screen-vh;
+    /*//@apply flex flex-col h-full min-hs-full;
+    //min-h-screen-vh
+    //min-height: calc(var(--vh, 1vh) * 100);*/
+  }
+}

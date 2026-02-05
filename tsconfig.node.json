@@ -12,11 +12,13 @@
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
-    "allowImportingTsExtensions": true,
+    "allowImportingTsExtensions": false,
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
     "noEmit": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
 
     /* Linting */
     "strict": true,
