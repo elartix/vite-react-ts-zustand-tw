@@ -1,12 +1,12 @@
 // outsource dependencies
-import _ from 'lodash';
 import { z } from 'zod';
 import cn from 'classnames';
 import { useForm } from 'react-hook-form';
-import { Transition } from '@headlessui/react';
 import { Button, Input } from '@heroui/react';
+import { Transition } from '@headlessui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { memo, type PropsWithChildren, useCallback, useState } from 'react';
+import { isEmpty, isEqual, get as _get, omit as _omit } from 'es-toolkit/compat';
 import { AtSymbolIcon, EyeIcon, EyeSlashIcon, LockClosedIcon, UserIcon } from '@heroicons/react/24/solid';
 
 
@@ -25,7 +25,7 @@ const SignUpFormSchema = z.object({
     // Perform async validation logic (e.g., check if email exists in the database)
     // Return true if validation passes, false otherwise
   }, 'Email already exists'), */
-}).refine((data) => _.isEqual(data.password, data.confirmPassword), {
+}).refine((data) => isEqual(data.password, data.confirmPassword), {
   path: ['confirmPassword'],
   message: 'Passwords does not match'
 });
@@ -38,9 +38,9 @@ type SignUpFormProps = PropsWithChildren<{
   onSubmit: (data: Partial<SignUpFormType>) => void
 }>;
 
-function checkUserNameToBeUnique(): RefinementCallback<{ username: string }> {
+function checkUserNameToBeUnique (): RefinementCallback<{ username: string }> {
   return async (data, { signal }) => {
-    if (!_.isEmpty(_.get(data, 'username'))) {
+    if (!isEmpty(_get(data, 'username'))) {
       // Mock Response async validation
       const response = await fetch('/api/auth/validation/username', {
         method: 'POST',
@@ -51,14 +51,14 @@ function checkUserNameToBeUnique(): RefinementCallback<{ username: string }> {
       });
       const json = await response.json();
 
-      return !_.get(json, 'data.userNameAlreadyExist', true);
+      return !_get(json, 'data.userNameAlreadyExist', true);
     }
 
     return true;
   };
 }
 
-export const SignUpForm = memo<SignUpFormProps>(function SignUpForm({ className, onSubmit }) {
+export const SignUpForm = memo<SignUpFormProps>(function SignUpForm ({ className, onSubmit }) {
   const {
     isLoading,
     submitErrorMessage,
@@ -93,7 +93,7 @@ export const SignUpForm = memo<SignUpFormProps>(function SignUpForm({ className,
   });
 
   const handleFormSubmit = useCallback((data: SignUpFormType) => {
-    onSubmit(_.omit(data, 'confirmPassword'));
+    onSubmit(_omit(data, 'confirmPassword'));
     reset();
   }, [onSubmit, reset]);
 
@@ -114,17 +114,18 @@ export const SignUpForm = memo<SignUpFormProps>(function SignUpForm({ className,
       >
         <div className="font-medium">User Created!</div>
         <span>
-          You can check username {' '}
+          You can check username { ' ' }
           <Button
             type="button"
             size="sm"
             color="primary"
             variant="flat"
-            onClick={() => setValue('username', _.get(user, 'username', ''))}>
-            Set value: {user?.username}
+            onClick={() => setValue('username', _get(user, 'username', ''))}
+          >
+            Set value: { user?.username }
           </Button>
         </span>
-        <pre><code>{JSON.stringify(user, null, 4)}</code></pre>
+        <pre><code>{ JSON.stringify(user, null, 4) }</code></pre>
       </div>
     </Transition>
 
@@ -137,9 +138,9 @@ export const SignUpForm = memo<SignUpFormProps>(function SignUpForm({ className,
       startContent={
         <UserIcon className="h-4 text-2xl text-default-400 pointer-events-none flex-shrink-0"/>
       }
-      isInvalid={!_.isEmpty(_.get(errors, 'username.message'))}
-      color={!_.isEmpty(_.get(errors, 'username.message')) ? 'danger' : 'default'}
-      errorMessage={!_.isEmpty(_.get(errors, 'username.message')) && _.get(errors, 'username.message', null)}
+      isInvalid={!isEmpty(_get(errors, 'username.message'))}
+      color={!isEmpty(_get(errors, 'username.message')) ? 'danger' : 'default'}
+      errorMessage={!isEmpty(_get(errors, 'username.message')) && _get(errors, 'username.message', null)}
       {...register('username', { onChange: uniqueName.invalidate })}
     />
     <Input
@@ -151,9 +152,9 @@ export const SignUpForm = memo<SignUpFormProps>(function SignUpForm({ className,
       startContent={
         <AtSymbolIcon className="h-4 text-2xl text-default-400 pointer-events-none flex-shrink-0"/>
       }
-      isInvalid={!_.isEmpty(_.get(errors, 'email.message'))}
-      color={!_.isEmpty(_.get(errors, 'email.message')) ? 'danger' : 'default'}
-      errorMessage={!_.isEmpty(_.get(errors, 'email.message')) && _.get(errors, 'email.message', null)}
+      isInvalid={!isEmpty(_get(errors, 'email.message'))}
+      color={!isEmpty(_get(errors, 'email.message')) ? 'danger' : 'default'}
+      errorMessage={!isEmpty(_get(errors, 'email.message')) && _get(errors, 'email.message', null)}
       {...register('email')}
     />
     <Input
@@ -172,17 +173,17 @@ export const SignUpForm = memo<SignUpFormProps>(function SignUpForm({ className,
           aria-label={isPasswordVisible ? 'Hide Password' : 'Show Password'}
           className="focus:outline-none"
           onClick={handlePasswordVisibility}>
-          {isPasswordVisible ? (
+          { isPasswordVisible ? (
             <EyeIcon className="h-4 text-2xl text-default-400 pointer-events-none"/>
           ) : (
             <EyeSlashIcon className="h-4 text-2xl text-default-400 pointer-events-none"/>
-          )}
+          ) }
         </Button>
       }
       type={isPasswordVisible ? 'text' : 'password'}
-      isInvalid={!_.isEmpty(_.get(errors, 'password.message'))}
-      color={!_.isEmpty(_.get(errors, 'password.message')) ? 'danger' : 'default'}
-      errorMessage={!_.isEmpty(_.get(errors, 'password.message')) && _.get(errors, 'password.message', null)}
+      isInvalid={!isEmpty(_get(errors, 'password.message'))}
+      color={!isEmpty(_get(errors, 'password.message')) ? 'danger' : 'default'}
+      errorMessage={!isEmpty(_get(errors, 'password.message')) && _get(errors, 'password.message', null)}
       {...register('password')}
     />
     <Input
@@ -201,17 +202,17 @@ export const SignUpForm = memo<SignUpFormProps>(function SignUpForm({ className,
           aria-label={isPasswordVisible ? 'Hide Password' : 'Show Password'}
           className="focus:outline-none"
           onClick={handlePasswordVisibility}>
-          {isPasswordVisible ? (
+          { isPasswordVisible ? (
             <EyeIcon className="h-4 text-2xl text-default-400 pointer-events-none"/>
           ) : (
             <EyeSlashIcon className="h-4 text-2xl text-default-400 pointer-events-none"/>
-          )}
+          ) }
         </Button>
       }
       type={isPasswordVisible ? 'text' : 'password'}
-      isInvalid={!_.isEmpty(_.get(errors, 'confirmPassword.message'))}
-      color={!_.isEmpty(_.get(errors, 'confirmPassword.message')) ? 'danger' : 'default'}
-      errorMessage={!_.isEmpty(_.get(errors, 'confirmPassword.message')) && _.get(errors, 'confirmPassword.message', null)}
+      isInvalid={!isEmpty(_get(errors, 'confirmPassword.message'))}
+      color={!isEmpty(_get(errors, 'confirmPassword.message')) ? 'danger' : 'default'}
+      errorMessage={!isEmpty(_get(errors, 'confirmPassword.message')) && _get(errors, 'confirmPassword.message', null)}
       {...register('confirmPassword')}
     />
     <div className="flex items-center">
@@ -237,10 +238,9 @@ export const SignUpForm = memo<SignUpFormProps>(function SignUpForm({ className,
       leaveFrom="transform opacity-100 scale-100"
       leaveTo="transform opacity-0 scale-95"
     >
-      <div className="p-4 mb-0 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
-           role="alert">
+      <div className="p-4 mb-0 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400">
         <div className="font-medium">Sign up error!</div>
-        <span>{submitErrorMessage}</span>.
+        <span>{ submitErrorMessage }</span>.
       </div>
     </Transition>
   </form>;

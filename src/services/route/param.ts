@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { isUndefined, isEqual, isFunction } from 'es-toolkit/compat';
 
 export interface ParamOptions<Type, Default> {
   name: string;
@@ -30,16 +30,16 @@ export default class Param<T, D> {
   constructor (options: ParamOptions<T, D>) {
     this.name = options.name;
     this.short = options.short ?? this.name;
-    if (!_.isUndefined(options.defaults)) {
+    if (!isUndefined(options.defaults)) {
       this.defaults = options.defaults;
     }
-    if (_.isFunction(options.isValid)) {
+    if (isFunction(options.isValid)) {
       this.isValid = options.isValid;
     }
-    if (_.isFunction(options.archive)) {
+    if (isFunction(options.archive)) {
       this.archive = options.archive;
     }
-    if (_.isFunction(options.extract)) {
+    if (isFunction(options.extract)) {
       this.extract = options.extract;
     }
   }
@@ -47,7 +47,7 @@ export default class Param<T, D> {
   to = (value: T) => {
     const def = this.defaults;
     const archived = this.archive(value);
-    if (this.isValid(value) && !_.isEqual(archived, def)) {
+    if (this.isValid(value) && !isEqual(archived, def)) {
       return archived;
     }
   };

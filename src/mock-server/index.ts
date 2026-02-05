@@ -1,11 +1,11 @@
 // outsource dependencies
-import _ from 'lodash';
 import { faker } from '@faker-js/faker';
+import { get as _get, isEmpty, isEqual } from 'es-toolkit/compat';
 import { createServer, Model, Factory, Response } from 'miragejs';
 
 
 // local dependencies
-import { type UserModel, type UserModelResponse } from '@/types/models/user.ts';
+import { type UserModel, type UserModelResponse } from '@/types/models/user';
 
 
 export const fetchUsers = (url: string) =>
@@ -51,7 +51,7 @@ const generateFakeUserFactory = () => Factory.extend<Partial<UserModel>>({
 
 const generateFakeUser = (extraData: Partial<UserModel>) => {
   const factory = generateFakeUserFactory();
-  const newUser = _.get(factory, 'attrs', {});
+  const newUser = _get(factory, 'attrs', {});
   return {
     ...newUser,
     ...extraData
@@ -157,7 +157,7 @@ export function makeServer ({ environment = 'test' }) {
         // let attrs = this.normalizedRequestAttrs()
 
         // @ts-ignore
-        return schema?.users.findBy({ id }).update(attrs);
+        return schema?.users.findBy({ id })/*.update(attrs)*/;
       });
 
       this.get('/actuator/health', () => ({
@@ -169,7 +169,7 @@ export function makeServer ({ environment = 'test' }) {
 
 
       this.post('/auth/login', (schema, request) => {
-        const username = _.get(JSON.parse(request.requestBody), 'username', null);
+        const username = _get(JSON.parse(request.requestBody), 'username', null);
         // let now = new Date()
         // let cookieExpiration = new Date(now.getTime() + 24 * 3600 * 1000)
         // document.cookie = `remember_me=cookie-content-here; domain=.dev-domain; path=/; expires=${cookieExpiration.toUTCString()};`
@@ -183,12 +183,12 @@ export function makeServer ({ environment = 'test' }) {
       });
 
       this.post('/auth/validation/username', (schema, request) => {
-        const username = _.get(JSON.parse(request.requestBody), 'username', null);
+        const username = _get(JSON.parse(request.requestBody), 'username', null);
 
-        if (!_.isEmpty(username)) {
+        if (!isEmpty(username)) {
           // @ts-ignore
           const res = schema?.users.findBy({ username });
-          const userNameAlreadyExist = _.isEqual(_.get(res, 'attrs.username'), username);
+          const userNameAlreadyExist = isEqual(_get(res, 'attrs.username'), username);
           return new Response(200, {}, {
             data: {
               userNameAlreadyExist
@@ -205,12 +205,12 @@ export function makeServer ({ environment = 'test' }) {
 
       this.post('/auth/register', (schema, request) => {
         const attrs = JSON.parse(request.requestBody);
-        const username = _.get(attrs, 'username', null);
+        const username = _get(attrs, 'username', null);
 
-        if (!_.isEmpty(username)) {
+        if (!isEmpty(username)) {
           // @ts-ignore
           const res = schema?.users.findBy({ username });
-          const userNameAlreadyExist = _.isEqual(_.get(res, 'attrs.username'), username);
+          const userNameAlreadyExist = isEqual(_get(res, 'attrs.username'), username);
           if (!userNameAlreadyExist) {
             const firstName = faker.person.firstName();
             const lastName = faker.person.lastName();
@@ -220,8 +220,8 @@ export function makeServer ({ environment = 'test' }) {
               lastName,
               name,
               username,
-              email: _.get(attrs, 'email', null),
-              password: _.get(attrs, 'password', null)
+              email: _get(attrs, 'email', null),
+              password: _get(attrs, 'password', null)
             });
             // @ts-ignore
             const user = schema?.users.create(newUser);

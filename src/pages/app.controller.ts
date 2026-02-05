@@ -1,12 +1,12 @@
 // outsource dependencies
-import _ from 'lodash';
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
+import { get as _get, isEqual } from 'es-toolkit/compat';
 
 
 // local dependencies
 import { config } from '@/constants';
-import { type UserModel } from '@/types/models/user.ts';
+import { type UserModel } from '@/types/models/user';
 import { storeLogger } from '@/services/store-logger';
 
 
@@ -49,7 +49,7 @@ export const useAppControllerStore = create<AppControllerStateAction>()(
               set((state) => {
                 return {
                   ...state,
-                  health: _.isEqual(_.get(health, 'status'), 'UP'),
+                  health: isEqual(_get(health, 'status'), 'UP'),
                   initialized: true
                 };
               });
@@ -73,7 +73,7 @@ export const useAppControllerStore = create<AppControllerStateAction>()(
       ),
       {
         name: storeName,
-        enabled: process.env.NODE_ENV === 'development',
+        enabled: import.meta.env.NODE_ENV === 'development',
       }
     ),
     storeName,

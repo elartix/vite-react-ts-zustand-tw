@@ -1,6 +1,6 @@
 // outsource dependencies
 import qs from 'qs';
-import _ from 'lodash';
+import { forEach as _forEach, find as _find, get as _get, isString, isEqual, isRegExp, isFunction } from 'es-toolkit/compat';
 
 // local dependencies
 import Param from './param';
@@ -36,14 +36,14 @@ export default class Route {
 
   readonly params: Array<Param<any, any>> = [];
 
-  static getSearch = () => String(_.get(window, 'location.search') || '');
+  static getSearch = () => String(_get(window, 'location.search') || '');
 
-  static getPathname = () => String(_.get(window, 'location.pathname') || '');
+  static getPathname = () => String(_get(window, 'location.pathname') || '');
 
   private formatQuery: (params: { [key: string]: any }) => string = params => {
     const result: { [key: string]: any } = {};
-    _.forEach(params, (value, key) => {
-      const r = _.find(this.query, { name: key });
+    _forEach(params, (value, key) => {
+      const r = _find(this.query, { name: key });
       if (r) {
         const v = r.to(value);
         if (v) {
@@ -68,7 +68,7 @@ export default class Route {
     const result: { [key: string]: any } = {};
     // @ts-ignore
     const matcher = new RegExp(String(this.ROUTE).replace(Route.regParam, (a, propName) => `(?<${propName}>[^/]+)`), 'i');
-    const p: { [key: string]: any } = _.get(String(url).match(matcher), 'groups', {});
+    const p: { [key: string]: any } = _get(String(url).match(matcher), 'groups', {});
     this.params.forEach(param => {
       result[param.name] = param.from(p[param.name]);
     });
@@ -87,10 +87,10 @@ export default class Route {
   };
 
   static create = (url: string, relativePath: string, options: RouteOptions = {}) => {
-    if (!_.isString(url)) {
+    if (!isString(url)) {
       throw new Error('Route error: first parameter "url" is required and should be a string');
     }
-    if (!_.isString(relativePath)) {
+    if (!isString(relativePath)) {
       throw new Error('Route error: first parameter "relativePath" is required and should be a string');
     }
     return new Route(url, relativePath, options);
@@ -109,18 +109,18 @@ export default class Route {
 
   static defineROUTE = (url: string) => String(url).replace(/\?.*/, '');
 
-  static defineREGEXP = (url: string, custom?: RegExp) => (_.isRegExp(custom)
+  static defineREGEXP = (url: string, custom?: RegExp) => (isRegExp(custom)
     ? custom
     : new RegExp(String(url).replace(Route.regParam, '.*'), 'i'));
 
-  static defineIsActive = (regexp: RegExp, custom?: (url: string) => boolean) => (_.isFunction(custom)
+  static defineIsActive = (regexp: RegExp, custom?: (url: string) => boolean) => (isFunction(custom)
     ? custom
     : () => regexp.test(Route.getPathname()));
 
   // @ts-ignore
   static defineQueryAnnotation = (url: string, options?: Array<Param<any, any>>) => {
     const annotation: Array<Param<any, any>> = [];
-    if (_.isArray(options)) {
+    if (Array.isArray(options)) {
       options.forEach(item => {
         annotation.push(Param.create(item));
       });
@@ -131,7 +131,7 @@ export default class Route {
   // @ts-ignore
   static defineParamsAnnotation = (url: string, options?: Array<Param<any, any>>) => {
     const annotation: Array<Param<ParamType, ParamType>> = [];
-    if (_.isArray(options)) {
+    if (Array.isArray(options)) {
       options.forEach(item => {
         return annotation.push(Param.create(item));
       });
@@ -145,7 +145,7 @@ export default class Route {
     return `${this.formatPath(params)}${this.formatQuery(query)}`;
   };
 
-  PARAMS = (pathname?: string) => this.parsePath(_.isString(pathname) ? pathname : Route.getPathname());
+  PARAMS = (pathname?: string) => this.parsePath(isString(pathname) ? pathname : Route.getPathname());
 
-  QUERY = (search?: string) => this.parseQuery(_.isString(search) ? search : Route.getSearch());
+  QUERY = (search?: string) => this.parseQuery(isString(search) ? search : Route.getSearch());
 }

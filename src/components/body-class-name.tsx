@@ -1,5 +1,5 @@
 // outsource dependencies
-import _ from 'lodash';
+import { isEmpty } from 'es-toolkit/compat';
 import { Children, cloneElement, isValidElement, memo, type PropsWithChildren, useEffect } from 'react';
 
 
@@ -13,10 +13,10 @@ interface IBodyClassName {
 export const BodyClassName = memo<PropsWithChildren<IBodyClassName>>(function BodyClassName ({ className, children }) {
   useEffect(() => {
     // NOTE Set up
-    !_.isEmpty(className) && className?.split(' ').map((classItemName) => addBodyClass(classItemName));
+    !isEmpty(className) && className?.split(' ').map((classItemName) => addBodyClass(classItemName));
     // NOTE Clean up
     return () => {
-      !_.isEmpty(className) && className?.split(' ').map((classItemName) => removeBodyClass(classItemName));
+      !isEmpty(className) && className?.split(' ').map((classItemName) => removeBodyClass(classItemName));
     };
   }, [className]);
 

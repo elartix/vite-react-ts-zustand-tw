@@ -1,7 +1,7 @@
 // outsource dependencies
-import _ from 'lodash';
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
+import { get as _get, isEqual } from 'es-toolkit/compat';
 
 
 // local dependencies
@@ -50,7 +50,7 @@ export const useSignUpControllerStore = create<SignUpControllerStateAction>()(
               set((state) => {
                 return {
                   ...state,
-                  health: _.isEqual(_.get(health, 'status'), 'UP'),
+                  health: isEqual(_get(health, 'status'), 'UP'),
                   initialized: true
                 };
               });
@@ -81,7 +81,7 @@ export const useSignUpControllerStore = create<SignUpControllerStateAction>()(
               set((state) => {
                 return {
                   ...state,
-                  user: _.get(json, 'data.user', null),
+                  user: _get(json, 'data.user', null),
                   isLoading: false,
                 };
               });
@@ -105,7 +105,7 @@ export const useSignUpControllerStore = create<SignUpControllerStateAction>()(
       ),
       {
         name: storeName,
-        enabled: process.env.NODE_ENV === 'development',
+        enabled: import.meta.env.NODE_ENV === 'development',
       }
     ),
     storeName,

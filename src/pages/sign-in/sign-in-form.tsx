@@ -1,11 +1,11 @@
 // outsource dependencies
-import _ from 'lodash';
 import { z } from 'zod';
 import cn from 'classnames';
 import { useForm } from 'react-hook-form';
-import { Transition } from '@headlessui/react';
 import { Button, Input } from '@heroui/react';
+import { Transition } from '@headlessui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { isEmpty, get as _get } from 'es-toolkit/compat';
 import { memo, type PropsWithChildren, useCallback, useState } from 'react';
 import { EyeIcon, EyeSlashIcon, LockClosedIcon, UserIcon } from '@heroicons/react/24/solid';
 
@@ -65,9 +65,9 @@ export const SignInForm = memo<SignInFormProps>(function SignInForm ({ className
       startContent={
         <UserIcon className="h-4 text-2xl text-default-400 pointer-events-none flex-shrink-0"/>
       }
-      isInvalid={!_.isEmpty(_.get(errors, 'username.message'))}
-      color={!_.isEmpty(_.get(errors, 'username.message')) ? 'danger' : 'default'}
-      errorMessage={!_.isEmpty(_.get(errors, 'username.message')) && _.get(errors, 'username.message', null)}
+      isInvalid={!isEmpty(_get(errors, 'username.message'))}
+      color={!isEmpty(_get(errors, 'username.message')) ? 'danger' : 'default'}
+      errorMessage={!isEmpty(_get(errors, 'username.message')) && _get(errors, 'username.message', null)}
       {...register('username')}
     />
 
@@ -95,9 +95,9 @@ export const SignInForm = memo<SignInFormProps>(function SignInForm ({ className
         </Button>
       }
       type={isPasswordVisible ? 'text' : 'password'}
-      isInvalid={!_.isEmpty(_.get(errors, 'password.message'))}
-      color={!_.isEmpty(_.get(errors, 'password.message')) ? 'danger' : 'default'}
-      errorMessage={!_.isEmpty(_.get(errors, 'password.message')) && _.get(errors, 'password.message', null)}
+      isInvalid={!isEmpty(_get(errors, 'password.message'))}
+      color={!isEmpty(_get(errors, 'password.message')) ? 'danger' : 'default'}
+      errorMessage={!isEmpty(_get(errors, 'password.message')) && _get(errors, 'password.message', null)}
       {...register('password')}
     />
     <div className="flex items-center">
@@ -123,8 +123,7 @@ export const SignInForm = memo<SignInFormProps>(function SignInForm ({ className
       leaveFrom="transform opacity-100 scale-100"
       leaveTo="transform opacity-0 scale-95"
     >
-      <div className="p-4 mb-0 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
-        role="alert">
+      <div className="p-4 mb-0 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400">
         <div className="font-medium">Sign in error!</div>
         <span>{ onSubmitErrorMessage }</span>.
       </div>

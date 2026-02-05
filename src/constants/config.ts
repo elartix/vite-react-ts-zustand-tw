@@ -1,20 +1,20 @@
 // outsource dependencies
-import _ from 'lodash';
+import { get as _get } from 'es-toolkit/compat';
 
 // local dependencies
 
 const environment = {
-  SID: varString(process.env.VITE_APP_SID),
-  NAME: varString(process.env.VITE_APP_NAME),
-  TITLE: varString(process.env.VITE_APP_TITLE),
-  DESCRIPTION: varString(process.env.VITE_APP_DESCRIPTION),
-  SHORT_NAME: varString(process.env.VITE_APP_SHORT_NAME),
-  DEBUG: varBoolean(process.env.VITE_APP_DEBUG),
-  VERSION: varString(process.env.VITE_APP_VERSION),
-  PRODUCTION: varBoolean(process.env.VITE_APP_PRODUCTION),
-  DATE_FORMAT: varString(process.env.VITE_APP_DATE_FORMAT),
-  TIME_FORMAT: varString(process.env.VITE_APP_TIME_FORMAT),
-  DATE_TIME_FORMAT: `${varString(process.env.VITE_APP_DATE_FORMAT) } ${ varString(process.env.VITE_APP_TIME_FORMAT)}`,
+  SID: varString(import.meta.env.VITE_APP_SID),
+  NAME: varString(import.meta.env.VITE_APP_NAME),
+  TITLE: varString(import.meta.env.VITE_APP_TITLE),
+  DESCRIPTION: varString(import.meta.env.VITE_APP_DESCRIPTION),
+  SHORT_NAME: varString(import.meta.env.VITE_APP_SHORT_NAME),
+  DEBUG: varBoolean(import.meta.env.VITE_APP_DEBUG),
+  VERSION: varString(import.meta.env.VITE_APP_VERSION),
+  PRODUCTION: varBoolean(import.meta.env.VITE_APP_PRODUCTION),
+  DATE_FORMAT: varString(import.meta.env.VITE_APP_DATE_FORMAT),
+  TIME_FORMAT: varString(import.meta.env.VITE_APP_TIME_FORMAT),
+  DATE_TIME_FORMAT: `${varString(import.meta.env.VITE_APP_DATE_FORMAT) } ${ varString(import.meta.env.VITE_APP_TIME_FORMAT)}`,
 };
 
 // NOTE addition ability to enable debugging
@@ -29,7 +29,7 @@ environment.DEBUG && console.info('%c CONFIG ', 'background: #EC1B24; color: #00
  * @param {String} prop
  * @param {Any} defaults
  */
-export const config = (prop: any, defaults?: any) => _.get(environment, prop, defaults);
+export const config = (prop: any, defaults?: any) => _get(environment, prop, defaults);
 config.all = () => Object.assign({}, environment);
 /******************************************************
  *            variables parsers

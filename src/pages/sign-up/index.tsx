@@ -1,16 +1,15 @@
 // outsource dependencies
-import _ from 'lodash';
 import cn from 'classnames';
 import { Link } from 'react-router';
+import { isEmpty } from 'es-toolkit/compat';
 import { memo, type PropsWithChildren, useCallback, useEffect } from 'react';
-
 
 // local dependencies
 import * as ROUTE from '@/constants/routes';
 import { AuthLayout } from '@/modules/layouts';
 import { AppLogo } from '@/components/app-logo';
-import { SignUpForm, type SignUpFormType } from '@/pages/sign-up/sign-up-form';
 import { useSignUpControllerStore } from '@/pages/sign-up/sign-up.controller';
+import { SignUpForm, type SignUpFormType } from '@/pages/sign-up/sign-up-form';
 
 
 export const SignUp = memo<PropsWithChildren<{ className?: string }>>(function SignUp ({ className }) {
@@ -32,7 +31,7 @@ export const SignUp = memo<PropsWithChildren<{ className?: string }>>(function S
   }, [signUp]);
 
   useEffect(() => {
-    if (!_.isEmpty(submitErrorMessage)) {
+    if (!isEmpty(submitErrorMessage)) {
       setTimeout(() => resetSubmitErrorMessage(), 4000);
     }
   }, [submitErrorMessage, resetSubmitErrorMessage]);

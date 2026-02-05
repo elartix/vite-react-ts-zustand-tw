@@ -1,8 +1,6 @@
 // outsource dependencies
-import _ from 'lodash';
 
 // local dependencies
-// import { history } from './history';
 // @ts-ignore
 import Route, { defineRoute } from '@/services/route';
 
