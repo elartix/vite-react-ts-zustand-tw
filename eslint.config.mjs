@@ -181,12 +181,12 @@ export default [
         // 'cb',
         // 'callback'
       ],
+      'import/consistent-type-specifier-style': ['warn', 'prefer-inline'],
       'import/named': ['error'],
       'import/newline-after-import': 'warn',
       'import/no-duplicates': ['warn', {
         'prefer-inline': true
       }],
-      'import/consistent-type-specifier-style': ['warn', 'prefer-inline'],
       'import/no-anonymous-default-export': [
         'warn',
         {
@@ -207,6 +207,14 @@ export default [
           ]
         }
       ],
+      'import/no-named-as-default': ['off'],
+      'import/namespace': 'off',
+      'import/ignore': [
+        'eslint-plugin-react-refresh',
+        '@stylistic/eslint-plugin',
+        '@typescript-eslint/eslint-plugin',
+        '@typescript-eslint/parser'
+      ],
       'indent': [
         'warn',
         2,
@@ -226,7 +234,7 @@ export default [
             'preferButton'
           ],
           'components': [
-            'react-router-dom_Link_is-valid-using-\'to\'',
+            'react-router_Link_is-valid-using-\'to\'',
             'Link'
           ],
           'specialLink': [
