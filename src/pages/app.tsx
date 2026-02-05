@@ -1,7 +1,8 @@
 // outsource dependencies
 import useVH from 'react-vh';
 import { memo, useEffect } from 'react';
-import { Navigate, Route, Routes, BrowserRouter } from 'react-router';
+import { ErrorBoundary } from '@suspensive/react'
+import { Navigate, Route, Routes, BrowserRouter as Router } from 'react-router';
 
 
 // local dependencies
@@ -10,9 +11,9 @@ import { Home } from '@/pages/home';
 import { SignIn } from '@/pages/sign-in';
 import { SignUp } from '@/pages/sign-up';
 import * as ROUTE from '@/constants/routes';
-import { Maintenance, NotFound } from '@/components/error-pages';
-import { useAppControllerStore } from '@/pages/app.controller';
 import { AppPreloader } from '@/components/app-preloader';
+import { useAppControllerStore } from '@/pages/app.controller';
+import { Maintenance, NotFound } from '@/components/error-pages';
 
 
 export const App = memo(function App () {
@@ -36,17 +37,27 @@ export const App = memo(function App () {
   }
 
   return <>
-    <BrowserRouter unstable_useTransitions>
-      <Routes>
-        <Route path={ROUTE.HOME.ROUTE} element={<Home/>}/>
-        <Route path={ROUTE.SIGN_IN.ROUTE} element={<SignIn/>}/>
-        <Route path={ROUTE.SIGN_UP.ROUTE} element={<SignUp/>}/>
-        <Route path="*" element={<Navigate to="/"/>}/>
-        { /* direct 404 */}
-        <Route path={ROUTE.NO_MATCH.ROUTE} element={<NotFound/>}/>
-        { /* as 404 */}
-        <Route element={<NotFound/>}/>
-      </Routes>
-    </BrowserRouter>
+    <ErrorBoundary
+      fallback={({ error, reset }) => (
+        <div>
+          <button onClick={reset}>Reset</button>
+          {error.message}
+        </div>
+      )}
+    >
+      <Router unstable_useTransitions>
+        <Routes>
+          <Route path={ROUTE.HOME.ROUTE} element={<Home/>}/>
+          <Route path={ROUTE.SIGN_IN.ROUTE} element={<SignIn/>}/>
+          <Route path={ROUTE.SIGN_UP.ROUTE} element={<SignUp/>}/>
+          {/* <Route path="*" element={<Navigate to="/"/>}/> */}
+          <Route path="*" element={<Navigate to={ROUTE.NO_MATCH.ROUTE} />}/>
+          { /* direct 404 */}
+          <Route path={ROUTE.NO_MATCH.ROUTE} element={<NotFound/>}/>
+          { /* as 404 */}
+          <Route element={<NotFound/>}/>
+        </Routes>
+      </Router>
+    </ErrorBoundary>
   </>;
 });
