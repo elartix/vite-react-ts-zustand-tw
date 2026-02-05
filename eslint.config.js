@@ -41,9 +41,15 @@ export default [
       },
       parser: tsParser, // Specify TypeScript parser
       parserOptions: {
-        project: './tsconfig.json', // Point to your tsconfig for type-aware linting
+        // project: './tsconfig.json', // Point to your tsconfig for type-aware linting
+        // Use project service for automatic tsconfig detection including references
+        projectService: true,
+        // Specify the root directory for relative TSConfig paths
+        tsconfigRootDir: import.meta.dirname,
+        sourceType: 'module',
       },
     },
+    ...tseslint.configs.recommendedTypeChecked,
     plugins: {
       'jsx-a11y': jsxA11y,
       '@stylistic': stylistic,
@@ -58,7 +64,13 @@ export default [
       },
       'import/resolver': {
         typescript: {}
-      }
+      },
+      'import/ignore': [
+        'eslint-plugin-react-refresh',
+        '@stylistic/eslint-plugin',
+        '@typescript-eslint/eslint-plugin',
+        '@typescript-eslint/parser'
+      ],
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
@@ -209,12 +221,6 @@ export default [
       ],
       'import/no-named-as-default': ['off'],
       'import/namespace': 'off',
-      'import/ignore': [
-        'eslint-plugin-react-refresh',
-        '@stylistic/eslint-plugin',
-        '@typescript-eslint/eslint-plugin',
-        '@typescript-eslint/parser'
-      ],
       'indent': [
         'warn',
         2,

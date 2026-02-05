@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   plugins: {
     autoprefixer: {},
     'postcss-import': {},
@@ -6,4 +6,4 @@ module.exports = {
     'postcss-flexbugs-fixes': {},
     tailwindcss: {},
   },
-}
+};
