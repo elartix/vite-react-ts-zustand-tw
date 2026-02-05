@@ -53,6 +53,9 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
       },
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     },
+    optimizeDeps: {
+      exclude: ['lucide-react'],
+    },
     cacheDir: './.cache',
     publicDir: 'public',
     plugins: [
