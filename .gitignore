@@ -1,29 +1,60 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# dependencies
+# Dependencies
 /node_modules
 /.pnp
 .pnp.js
-.idea
-.vscode
 
-# testing
+# Ide
+/.idea
+/.vscode
+
+# Testing
 /coverage
+/.coverage
 
-# next.js
+# Build Outputs
 /.next/
-/out/
-
-# production
 .cache
-build
-dist
-dist-ssr
-dev-dist
+/out/
+/build
+/dist
+/dist-ssr
+/dev-dist
 
-# misc
+# --experimental-https
+/certificates
+
+# Turbo
+.turbo
+
+# Vercel
+.vercel
+
+# Typescript
+*.tsbuildinfo
+
+# Debug
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Local env files
+.env
+.env*.local
+.env*.local*
+
+# Misc
 .DS_Store
 *.pem
+*.bak.*
+.bak
+.tmp
 
 # Logs
 logs
@@ -34,14 +65,3 @@ yarn-error.log*
 .pnpm-debug.log*
 pnpm-debug.log*
 lerna-debug.log*
-
-# local env files
-#.env
-.env.local
-.env*.local*
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
