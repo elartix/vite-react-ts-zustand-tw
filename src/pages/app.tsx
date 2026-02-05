@@ -1,7 +1,7 @@
 // outsource dependencies
 import useVH from 'react-vh';
 import { memo, useEffect } from 'react';
-import { ErrorBoundary } from '@suspensive/react'
+import { ErrorBoundary } from '@suspensive/react';
 import { Navigate, Route, Routes, BrowserRouter as Router } from 'react-router';
 
 
@@ -41,7 +41,7 @@ export const App = memo(function App () {
       fallback={({ error, reset }) => (
         <div>
           <button onClick={reset}>Reset</button>
-          {error.message}
+          { error.message }
         </div>
       )}
     >
@@ -50,11 +50,11 @@ export const App = memo(function App () {
           <Route path={ROUTE.HOME.ROUTE} element={<Home/>}/>
           <Route path={ROUTE.SIGN_IN.ROUTE} element={<SignIn/>}/>
           <Route path={ROUTE.SIGN_UP.ROUTE} element={<SignUp/>}/>
-          {/* <Route path="*" element={<Navigate to="/"/>}/> */}
-          <Route path="*" element={<Navigate to={ROUTE.NO_MATCH.ROUTE} />}/>
-          { /* direct 404 */}
+          { /* <Route path="*" element={<Navigate to="/"/>}/> */ }
+          <Route path="*" element={<Navigate to={ROUTE.NO_MATCH.ROUTE}/>}/>
+          { /* direct 404 */ }
           <Route path={ROUTE.NO_MATCH.ROUTE} element={<NotFound/>}/>
-          { /* as 404 */}
+          { /* as 404 */ }
           <Route element={<NotFound/>}/>
         </Routes>
       </Router>
