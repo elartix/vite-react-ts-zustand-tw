@@ -10,11 +10,8 @@ import appDevLogo from '@/assets/images/logo-dev.svg';
 
 // configure
 type AppLogoProps = PropsWithChildren<{
-   
   src?: any,
-   
   alt?: string,
-   
   className?: string
 }>
 
