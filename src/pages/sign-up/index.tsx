@@ -1,7 +1,7 @@
 // outsource dependencies
 import _ from 'lodash';
 import cn from 'classnames';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { memo, type PropsWithChildren, useCallback, useEffect } from 'react';
 
 

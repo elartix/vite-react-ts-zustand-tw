@@ -1,6 +1,6 @@
 // outsource dependencies
 import { Button } from '@heroui/react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 // local dependencies
 import { HOME } from '@/constants';

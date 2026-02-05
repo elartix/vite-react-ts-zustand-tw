@@ -1,13 +1,12 @@
 // outsource dependencies
 import useVH from 'react-vh';
 import { memo, useEffect } from 'react';
-import { Route, Routes, Navigate } from 'react-router-dom';
-import { HistoryRouter as Router } from 'redux-first-history/rr6';
+import { Navigate, Route, Routes, BrowserRouter } from 'react-router';
 
 
 // local dependencies
 import { Home } from '@/pages/home';
-import { history } from '@/constants';
+// import { history } from '@/constants';
 import { SignIn } from '@/pages/sign-in';
 import { SignUp } from '@/pages/sign-up';
 import * as ROUTE from '@/constants/routes';
@@ -26,24 +25,28 @@ export const App = memo(function App () {
   const { health, initialized, initialize } = useAppControllerStore((state) => state);
 
   // NOTE initialize business logic
-  useEffect(() => { initialize({}); }, [initialize]);
+  useEffect(() => {
+    initialize({});
+  }, [initialize]);
 
   // NOTE select view based on application state
   // if (!health) { return <Maintenance />; }
-  if (!initialized) { return <AppPreloader />; }
+  if (!initialized) {
+    return <AppPreloader/>;
+  }
 
   return <>
-    <Router history={history}>
+    <BrowserRouter unstable_useTransitions>
       <Routes>
-        <Route path={ROUTE.HOME.ROUTE} element={<Home />} />
-        <Route path={ROUTE.SIGN_IN.ROUTE} element={<SignIn />} />
-        <Route path={ROUTE.SIGN_UP.ROUTE} element={<SignUp />} />
-        <Route path="*" element={<Navigate to="/" />} />
-        { /* direct 404 */ }
-        <Route path={ROUTE.NO_MATCH.ROUTE} element={<NotFound />} />
-        { /* as 404 */ }
-        <Route element={<NotFound />} />
+        <Route path={ROUTE.HOME.ROUTE} element={<Home/>}/>
+        <Route path={ROUTE.SIGN_IN.ROUTE} element={<SignIn/>}/>
+        <Route path={ROUTE.SIGN_UP.ROUTE} element={<SignUp/>}/>
+        <Route path="*" element={<Navigate to="/"/>}/>
+        { /* direct 404 */}
+        <Route path={ROUTE.NO_MATCH.ROUTE} element={<NotFound/>}/>
+        { /* as 404 */}
+        <Route element={<NotFound/>}/>
       </Routes>
-    </Router>
+    </BrowserRouter>
   </>;
 });
