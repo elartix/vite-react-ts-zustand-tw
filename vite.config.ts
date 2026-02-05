@@ -29,7 +29,7 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
           new RegExp('@fortawesome\/[\\w]+-[\\w]+-svg-icons\/fa[\\w]+\.js')
         ]
       },
-      rollupOptions: {
+      /* rollupOptions: {
         input: {
           main: resolve(__dirname, 'index.html'),
         },
@@ -40,7 +40,7 @@ export default defineConfig(({ command, mode }: ConfigEnv) => {
             }
           }
         }
-      },
+      }, */
     },
     define: {
       // By default, Vite doesn't include shims for NodeJS/
