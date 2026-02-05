@@ -1,11 +1,11 @@
 // outsource dependencies
-import cn from 'classnames';
 import { type FC, memo } from 'react';
 import { Spinner } from '@heroui/react';
 
 
 // local dependencies
-import { Spinner as LocalSpinner } from '@/components/spinner.tsx';
+import { cn } from '@/utils/cn';
+import { Spinner as LocalSpinner } from '@/components/spinner';
 
 type AppPreloaderProps = {
   className?: string
@@ -16,3 +16,4 @@ export const AppPreloader:FC<AppPreloaderProps> = memo<AppPreloaderProps>(({ cla
     <Spinner size="lg" color="primary" />
   </div>;
 });
+
